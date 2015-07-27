@@ -1,0 +1,55 @@
+body{
+    height: 500px;
+    width: 90%;
+    margin: auto;
+    background-color: background;
+}
+#content{
+    background-image: url(../image/fond_sabc_castel.jpg);
+    background-repeat: no-repeat;
+    width: 1284px;
+    height: 500px;
+    margin: auto;
+    background-attachment: fixed;
+    
+}
+/*#logo1{
+    background-image: url(../image/logo_groupe_castel.gif);
+    background-repeat: no-repeat;
+    width: 495px;
+    height: 89px;
+}*/
+#logo2{
+    background-image: url(../image/ho_slogan.png);
+    background-repeat: no-repeat;
+    width: 495px;
+    height: 89px;
+    float: right;
+    margin-right:50px;
+    margin-top: 60px;
+}
+
+#connec-part{
+    width: 380px;
+    height: 160px;  
+    padding-top: 290px;
+    margin-left: 390px;
+    opacity: 0.7;
+    font-size: 15px;
+    text-align: center;
+    
+}
+#logo{
+    background-image: url(../image/sabc_logo.gif);
+    background-repeat: no-repeat;
+    width: 336px;
+    height: 96px;
+    float: left;
+}
+
+#logo,#logo2{
+    display: inline-block;
+    float: top;
+    margin-top: 40px;
+    border-radius: 3px;
+}

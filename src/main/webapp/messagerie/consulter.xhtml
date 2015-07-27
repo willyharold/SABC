@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Les Brasseries du Cameroun </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../css/corps.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/gif" href="../image/logo.gif" />
+    </h:head>
+    <h:body>
+        <div>
+       <ui:include src="../menu.xhtml" />
+        </div>
+        <div id="conten">
+            <h:form id="list">
+                    <p:contextMenu for="agentTable">
+                        <p:menuitem value="lire" onclick="PF('detail_message').show()" icon="ui-icon-pencil"  update=":saveform:display"/>
+                        <p:menuitem value="Supprimer" onclick="PF('cd').show()" icon="ui-icon-home"  update=":supform" />
+                         
+                    </p:contextMenu>
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:dataTable  var="message" id="agentTable" value="#{messagerieBean.messages}" selection="#{messagerieBean.message}" selectionMode="single" rowKey="#{message.id}" paginator="true" rows="10">  
+
+                        <f:facet name="header">  
+                            Messagerie
+                        </f:facet> 
+
+                        <p:column headerText="status" filterBy="#{message.status}" sortBy="#{message.status}">
+
+                            <h:outputText value="#{message.status}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="message" >
+
+                            <h:outputText value="#{message.message.substring(0,20)}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="date" filterBy="#{message.date_debut.time}" sortBy="#{message.date_debut.time}">
+                            <h:outputText value="#{message.date_debut.time}">
+                                <f:convertDateTime pattern="dd/MM/yyy" type="date" />
+                            </h:outputText>  
+                        </p:column> 
+                    </p:dataTable> 
+                </h:form>
+            
+            <p:dialog id="save" header="message" widgetVar="detail_message" resizable="false" width="500" showEffect="clip" height="300"> 
+                   <h:form id ="saveform">
+                        <h:panelGrid id="display" columns="2" >   
+                            <h:outputText value="date: "/>
+                            <h:outputText value="#{messagerieBean.message.date_debut.time}" >
+                                <f:convertDateTime pattern="dd/MM/yyy" type="date" /> 
+                            </h:outputText>
+                            <h:outputText value="message: "/>
+                            <h:outputText value="#{messagerieBean.message.message}" /> 
+                          <h:inputHidden  id="id_message" value="#{messagerieBean.message.id}"/>  
+                        </h:panelGrid> 
+                    </h:form>
+               </p:dialog>
+            
+            <p:confirmDialog  id="confirm" message="voulez vous vraiment supprimer?" showEffect="fade" widgetVar="cd" severity="alert">
+                    <h:form id="supform">
+                        
+                     <h:inputHidden  id="entree11" value="#{messagerieBean.message.id}"/>
+                        <p:commandButton value="Yes" oncomplete="PF('cd').hide()" action="#{messagerieBean.supprimer()}" icon="ui-icon-check" update=":list:agentTable"/>  
+                       
+                        <p:commandButton value="No" onclick="PF('cd').hide()" icon="ui-icon-close" />  
+                    </h:form>
+            </p:confirmDialog>
+            
+        </div>
+    </h:body>
+</html>

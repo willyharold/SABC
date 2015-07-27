@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Les Brasseries du Cameroun </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../css/corps.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/gif" href="../image/logo.gif" />
+    </h:head>
+    <h:body>
+        <div>
+       <ui:include src="../menu.xhtml" />
+        </div>
+        <div id="conten">
+            <h:form id="list">
+                    <p:contextMenu for="agentTable">     
+                        <p:menuitem value="Commander de l'encre" onclick="PF('modifierDialog').show()" icon="ui-icon-home"  update=":saveform:display" />
+                        <p:menuitem value="Commander du papier" onclick="PF('ajouter_dialog').show()" icon="ui-icon-pencil"  update=":updatform:display"/> 
+                    </p:contextMenu>
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:dataTable  var="imprimante" id="agentTable" value="#{commandeBean.imprimantes}" selection="#{commandeBean.imprimante}" selectionMode="single" rowKey="#{imprimante.id}" paginator="true" rows="10">  
+
+                        <f:facet name="header">  
+                            Liste des imprimantes
+                        </f:facet> 
+
+                        <p:column headerText="identitifiant" filterBy="#{imprimante.identifiant}" sortBy="#{imprimante.identifiant}">
+
+                            <h:outputText value="#{imprimante.identifiant}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="categorie" filterBy="#{imprimante.categorie}" sortBy="#{imprimante.categorie}">  
+                            <h:outputText value="#{imprimante.categorie}"/> 
+                        </p:column>
+                        <p:column headerText="date de mise en service" sortBy="#{imprimante.date}">  
+                            <h:outputText value="#{imprimante.date.time}">
+                                 <f:convertDateTime pattern="dd/MM/yyy" type="date" />
+                            </h:outputText>  
+                        </p:column>
+                       
+                    </p:dataTable> 
+                </h:form>
+                <p:dialog id="dialog" header="Commander de l'encre" widgetVar="modifierDialog" resizable="false"  
+                          width="400" showEffect="clip" >  
+                    <h:form id ="updatform">
+                        <h:panelGrid id="display" columns="2" >  
+                            <h:outputText value="type d'encre"/> 
+                            <p:selectOneMenu id="encre" value="#{commandeBean.type_encre}" required="true" style=" width:100%;">
+                                <f:selectItems value="#{commandeBean.list}" />  
+                            </p:selectOneMenu>
+                            
+                            <h:outputText value="nombre de cartouche"/> 
+                            <p:inputText  id="nbr_encre" value="#{commandeBean.encre.nbr_encre}" required="true" /> 
+
+                            <h:inputHidden  id="udp_id" value="#{commandeBean.imprimante.id}"/> 
+                            <f:facet name="footer"> <br/> 
+                                <p:commandButton value="Commander" action="#{commandeBean.saveInk()}"  oncomplete="PF('modifierDialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
+                            </f:facet>
+                            <f:facet name="footer">  
+                                <p:commandButton value="fermer" onclick="PF('modifierDialog').hide()" />  
+                            </f:facet>
+                        </h:panelGrid> 
+                    </h:form>
+                </p:dialog>       
+
+               <p:dialog id="save" header="Commander du papier" widgetVar="ajouter_dialog" resizable="false" width="400" showEffect="clip" > 
+                   <h:form id ="saveform">
+                        <h:panelGrid id="display" columns="2" >  
+                            <h:outputText value="nombre de ram de papier"/> 
+                            <p:inputText  id="iden" value="#{commandeBean.papier.nbr_papier}" required="true"/> 
+
+                            <f:facet name="footer"> <br/>  
+                                <p:commandButton value="Commander" action="#{imprimanteBean.enregistrer()}"  oncomplete="PF('ajouter_dialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
+                            </f:facet>
+                            <f:facet name="footer">  
+                                <p:commandButton value="Fermer" onclick="PF('ajouter_Dialog').hide()" />  
+                            </f:facet>
+                        </h:panelGrid> 
+                    </h:form>
+               </p:dialog>
+        </div>
+    </h:body>
+</html>

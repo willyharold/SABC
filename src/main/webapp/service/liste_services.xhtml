@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Les Brasseries du Cameroun </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../css/corps.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/gif" href="../image/logo.gif" />
+    </h:head>
+    <h:body>
+        <div>
+       <ui:include src="../menu.xhtml" />
+        </div>
+        <div id="conten">
+            <h:form id="list">
+                    <p:contextMenu for="agentTable">     
+                        <p:menuitem value="Supprimer" onclick="PF('cd').show()" icon="ui-icon-home"  update=":supform" />
+                        <p:menuitem value="Modifier" onclick="PF('modifierDialog').show()" icon="ui-icon-pencil"  update=":updatform:display"/> 
+                    </p:contextMenu>
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:dataTable  var="service" id="agentTable" value="#{serviceBean.services}" selection="#{serviceBean.service}" selectionMode="single" rowKey="#{service.id}" paginator="true" rows="10">  
+
+                        <f:facet name="header">  
+                            Liste des services
+                        </f:facet> 
+
+                        <p:column headerText="nom" filterBy="#{service.nom}" sortBy="#{service.nom}">
+
+                            <h:outputText value="#{service.nom}" />  
+                        </p:column>                       
+                        
+                        <p:column headerText="acronyme" filterBy="#{service.acronyme}" sortBy="#{service.acronyme}">  
+                            <h:outputText value="#{service.acronyme}" />  
+                        </p:column>
+                        
+                        <p:column headerText="type de service" filterBy="#{service.servicetype}" sortBy="#{service.servicetype}">  
+                            <h:outputText value="#{service.servicetype}" />  
+                        </p:column>
+                        
+                        <p:column headerText="agence" filterBy="#{service.agence.region}" sortBy="#{service.agence.region}">  
+                            <h:outputText value="#{service.agence.region}" />  
+                        </p:column>
+                      
+                        <f:facet name="footer">  
+                            <p:commandButton value="Ajouter un service" onclick="PF('ajouter_dialog').show()" icon="ui-icon-disk" update=":list:agentTable" /> 
+                        </f:facet> 
+                    </p:dataTable> 
+                </h:form>
+                <p:dialog id="dialog" header="Modifier un service" widgetVar="modifierDialog" resizable="false"  
+                          width="400" showEffect="clip" >  
+                    <h:form id ="updatform">
+                        <h:panelGrid id="display" columns="2" >  
+                            <h:outputText value="nom"/> 
+                            <p:inputText  id="idenM" value="#{serviceBean.service.nom}" required="true"/> 
+                            <h:outputText value="acronyme"/> 
+                            <p:inputText  id="motM" value="#{serviceBean.service.acronyme}" required="true"/>
+                            <h:outputText value="type de service"/> 
+                            <p:selectOneMenu id="rM" value="#{serviceBean.s}" required="true" style=" width:100%;">
+                                <f:selectItems value="#{serviceBean.serviceTypes}" />  
+                            </p:selectOneMenu>
+                            <h:outputText value="agence"/> 
+                            <p:selectOneMenu id="en5M" value="#{serviceBean.agence_nom}" required="true" style="width:100%">
+                                <f:selectItems value="#{serviceBean.agences}" />  
+                            </p:selectOneMenu>
+                            
+                            <h:inputHidden  id="entree10" value="#{serviceBean.service.id}"/> 
+                            <f:facet name="footer"> <br/> 
+                                <p:commandButton value="Modifier" action="#{serviceBean.modifier()}"  oncomplete="PF('modifierDialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
+                            </f:facet>
+                            <f:facet name="footer">  
+                                <p:commandButton value="Initialiser" type="reset" />  
+                            </f:facet>
+                        </h:panelGrid> 
+                    </h:form>
+                </p:dialog>       
+
+                <p:confirmDialog  id="confirm" message="voulez vous vraiment supprimer?" showEffect="fade" widgetVar="cd" severity="alert">
+                    <h:form id="supform">
+                        <h:inputHidden  id="entree11" value="#{serviceBean.service.id}"/>
+                        <p:commandButton value="Yes" action="#{serviceBean.supprimer()}"  oncomplete="PF('cd').hide()" icon="ui-icon-check" update=":list:agentTable"/>
+                        <p:commandButton value="No" onclick="PF('cd').hide()" icon="ui-icon-close" />
+                    </h:form>
+                </p:confirmDialog>
+               <p:dialog id="save" header="ajouter un service" widgetVar="ajouter_dialog" resizable="false" width="400" showEffect="clip" > 
+                   <h:form id ="saveform">
+                        <h:panelGrid id="display" columns="2" >  
+                            <h:outputText value="nom"/> 
+                            <p:inputText  id="iden" value="#{serviceBean.service.nom}" required="true"/> 
+                            <h:outputText value="acronyme"/> 
+                            <p:inputText  id="mot" value="#{serviceBean.service.acronyme}" required="true"/>
+                            <h:outputText value="type de service"/> 
+                            <p:selectOneMenu id="r" value="#{serviceBean.s}" required="true" style=" width:100%;">
+                                <f:selectItems value="#{serviceBean.serviceTypes}" />  
+                            </p:selectOneMenu>
+                            <h:outputText value="agence"/> 
+                            <p:selectOneMenu id="en5" value="#{serviceBean.agence_nom}" required="true" style="width:100%">
+                                <f:selectItems value="#{serviceBean.agences}" />  
+                            </p:selectOneMenu>
+                            
+                            
+                            <f:facet name="footer"> <br/>  
+                                <p:commandButton value="Enregistrer" action="#{serviceBean.enregistrer()}"  oncomplete="PF('ajouter_dialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
+                            </f:facet>
+                            <f:facet name="footer">  
+                                <p:commandButton value="Effacer" type="reset"/>  
+                            </f:facet>
+                        </h:panelGrid> 
+                    </h:form>
+               </p:dialog>
+        </div>
+    </h:body>
+</html>

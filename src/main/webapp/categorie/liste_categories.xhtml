@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Les Brasseries du Cameroun </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../css/corps.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/gif" href="../image/logo.gif" />
+    </h:head>
+    <h:body>
+        <div>
+       <ui:include src="../menu.xhtml" />
+        </div>
+        <div id="conten">
+            <h:form id="list">
+                    <p:contextMenu for="agentTable">     
+                        <p:menuitem value="Supprimer" onclick="PF('cd').show()" icon="ui-icon-home"  update=":supform" />
+                        <p:menuitem value="Modifier" onclick="PF('modifierDialog').show()" icon="ui-icon-pencil"  update=":updatform:display"/> 
+                    </p:contextMenu>
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:dataTable  var="categorie" id="agentTable" value="#{categorieBean.categories}" selection="#{categorieBean.categorie}" selectionMode="single" rowKey="#{categorie.id}" paginator="true" rows="10">  
+
+                        <f:facet name="header">  
+                            Liste des categories d'imprimantes
+                        </f:facet> 
+
+                        <p:column headerText="categorie" filterBy="#{categorie.categorie}" sortBy="#{categorie.categorie}">
+
+                            <h:outputText value="#{categorie.categorie}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="nombre d'encre" filterBy="#{categorie.nbre_encre}" sortBy="#{categorie.nbre_encre}">
+
+                            <h:outputText value="#{categorie.nbre_encre}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="nombre de ram de papier" filterBy="#{categorie.nbre_format}" sortBy="#{categorie.nbre_format}">
+
+                            <h:outputText value="#{categorie.nbre_format}" />  
+                        </p:column> 
+                        <f:facet name="footer">  
+                            <p:commandButton value="Ajouter une categorie" onclick="PF('ajouter_dialog').show()" icon="ui-icon-disk" update=":list:agentTable" /> 
+                        </f:facet> 
+                    </p:dataTable> 
+                </h:form>
+                <p:dialog id="dialog" header="Modifier une personne" widgetVar="modifierDialog" resizable="false"  
+                          width="400" showEffect="clip" >  
+                    <h:form id ="updatform">
+                        <h:panelGrid id="display" columns="2" >  
+                            <h:outputText value="categorie"/> 
+                            <p:inputText  id="sup_iden1" value="#{categorieBean.categorie.categorie}" required="true" style=" width:95%;"/> 
+
+                            <h:outputText value="nombre de ram "/> 
+                            <p:inputText  id="sup_iden2" value="#{categorieBean.categorie.nbre_format}" style=" width:95%;"/> 
+                           
+                            <h:outputText value="nombre de cartouche"/> 
+
+                            <p:inputText  id="sup_iden" value="#{categorieBean.categorie.nbre_encre}" style=" width:95%;"/> 
+                            
+                            <h:inputHidden  id="udp_id" value="#{categorieBean.categorie.id}"/> 
+                            <f:facet name="footer"> <br/> 
+                                <p:commandButton value="Modifier" action="#{categorieBean.modifier()}"  oncomplete="PF('modifierDialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
+                            </f:facet>
+                            <f:facet name="footer">  
+                                <p:commandButton value="Initialiser" type="reset" />  
+                            </f:facet>
+                        </h:panelGrid> 
+                    </h:form>
+                </p:dialog>       
+
+                <p:confirmDialog  id="confirm" message="voulez vous vraiment supprimer?" showEffect="fade" widgetVar="cd" severity="alert">
+                    <h:form id="supform">
+                        <h:inputHidden  id="entree11" value="#{categorieBean.categorie.id}"/>
+                     
+                        <p:commandButton value="Yes" action="#{categorieBean.supprimer()}"  oncomplete="PF('cd').hide()" icon="ui-icon-check" update=":list:agentTable"/>  
+                       
+                          <p:commandButton value="No" onclick="PF('cd').hide()" icon="ui-icon-close" />
+                     
+                        
+                    </h:form>
+                </p:confirmDialog>
+               <p:dialog id="save" header="ajouter une categorie" widgetVar="ajouter_dialog" resizable="false" width="400" showEffect="clip" > 
+                   <h:form id ="saveform">
+                        <h:panelGrid id="display" columns="2" >  
+                            <h:outputText value="categorie"/> 
+                            <p:inputText  id="iden1" value="#{categorieBean.categorie.categorie}" required="true" style=" width:95%;"/> 
+
+                            <h:outputText value="nombre de ram "/> 
+                            <p:inputText  id="iden2" value="#{categorieBean.categorie.nbre_format}" style=" width:95%;"/> 
+                           
+                            <h:outputText value="nombre de cartouche"/> 
+
+                            <p:inputText  id="iden" value="#{categorieBean.categorie.nbre_encre}" style=" width:95%;"/> 
+                            
+                            <f:facet name="footer"> <br/>  
+                                <p:commandButton value="Enregistrer" action="#{categorieBean.enregistrer()}"  oncomplete="PF('ajouter_dialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
+                            </f:facet>
+                            <f:facet name="footer">  
+                                <p:commandButton value="Effacer" type="reset"/>  
+                            </f:facet>
+                        </h:panelGrid> 
+                    </h:form>
+               </p:dialog>
+        </div>
+    </h:body>
+</html>

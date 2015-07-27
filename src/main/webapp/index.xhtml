@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Les Brasseries du Cameroun</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="css/connexion.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/gif" href="image/logo.gif" />
+    </h:head>
+    <h:body>
+        <div id="content">
+            <div id="logo">  
+            </div>
+            <div id="logo1">  
+            </div>
+            <div id="logo2">  
+            </div>    
+            <div id="connec-part">
+                 <h:form id="form">
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" /> 
+                <p:panel>
+                    <h:panelGrid columns="2"  >
+                        <h:outputText value="Identifiant:"  />
+                        <p:inputText  id="entree1" value ="#{compteBean.compte.identifiant}" />
+                        <h:outputLabel for="pwd1" value="Mot de passe:" />
+                        <p:password id="pwd1" value="#{compteBean.compte.mot_passe}"  label="Password" /> 
+                        <f:facet name="footer" id="connec_login">  
+                            <p:commandButton value="Connexion"  action="#{compteBean.connec()}" update="messages"/>  
+                        </f:facet>
+                    </h:panelGrid>
+                </p:panel>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>

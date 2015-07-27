@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Les Brasseries du Cameroun</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="css/corps.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/gif" href="image/logo.gif" />
+    </h:head>
+      <h:body>
+          <div id="entete">
+            <div id="logo">  
+            </div>
+            
+            <div id="logo2">  
+            </div>  
+             
+          </div>
+       <div id="menu">  
+       <h:form id="menubar">          
+            <p:menubar id="unique">
+                <p:menuitem value="Accueil"  icon="ui-icon-home"/>
+                 
+                <p:submenu label="Agence" icon="ui-icon-folder-collapsed">  
+                    <p:menuitem value="Liste d'agence" action="#{orientationBean.liste_agences()}" icon="ui-icon-document" />
+                    <p:menuitem value="Importer agences" url="/entreprise/creationentreprise.xhtml" icon="ui-icon-plus" />
+                    
+                </p:submenu>
+                <p:submenu label="Service" icon="ui-icon-folder-collapsed">       
+                    <p:menuitem value="Liste services" action="#{orientationBean.liste_services()}" icon="ui-icon-plus" />
+                    <p:menuitem value="Importer service" url="/document/listesdocuments.xhtml" icon="ui-icon-plus" />
+                </p:submenu>
+                <p:submenu label="Personnel" icon="ui-icon-bookmark">  
+                    <p:menuitem value="Liste personnels" action="#{orientationBean.liste_personnels()}" icon="ui-icon-arrowreturnthick-1-w" />  
+                    <p:menuitem value="Importer personnels" url="#" icon="ui-icon-arrowreturnthick-1-e" />
+                </p:submenu>
+                <p:submenu label="Messagerie" icon="ui-icon-person">
+                    <p:menuitem value="Consulter" action="#{orientationBean.messagerie()}" icon="ui-icon-plus" />
+                    
+                </p:submenu>
+                
+                <p:submenu label="Imprimante" icon="ui-icon-person">  
+                    <p:menuitem value="Liste d'imprimante" action="#{orientationBean.liste_imprimantes()}" icon="ui-icon-document" />
+                    <p:menuitem value="Commander du conso" action="#{orientationBean.consommable()}" icon="ui-icon-plus" />  
+                    <p:menuitem value="Importer imprimantes" icon="ui-icon-plus" />  
+                    
+                </p:submenu>
+                <p:submenu label="Categorie" icon="ui-icon-bookmark">  
+                    <p:menuitem value="Liste categories"  action="#{orientationBean.liste_categories()}" icon="ui-icon-arrowreturnthick-1-w" />  
+                </p:submenu>
+                
+                <p:submenu label="Statistiques" icon="ui-icon-bookmark">  
+                    <p:menuitem value="Annuelle"  icon="ui-icon-arrowreturnthick-1-w" />  
+                    <p:menuitem value="Totale" url="#" icon="ui-icon-arrowreturnthick-1-e" />
+                </p:submenu>
+                
+                <p:submenu label="Compte" icon="ui-icon-wrench">  
+                    <p:menuitem value="Liste comptes" action="#{orientationBean.liste_comptes()}" icon="ui-icon-plus" />
+                    <p:menuitem value="Deconnexion" action="#{orientationBean.deconnexion()}" icon="ui-icon-plus" />
+                </p:submenu>
+        
+                
+              
+            </p:menubar> 
+        </h:form>     
+       </div>  
+      </h:body>
+</html>
