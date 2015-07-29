@@ -2,7 +2,7 @@ body{
     height: 700px;
     width: 1284px;
     margin: auto;
-    background-color: background;
+    background-color: white;
 }
 
 #logo2{
@@ -27,8 +27,8 @@ body{
     
 }
 #menu{
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: 100px;
+    margin-right: 100px;
     height: 45px;
     /*padding: 102px;*/
    /* background-color:lightgrey;*/
@@ -41,14 +41,42 @@ body{
     background-color: darkgray;
     border-radius: 5px;
     margin-top: 10px;
+    margin-left: 100px;
+    margin-right: 100px;
 }
 
 #conten{
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: 100px;
+    margin-right: 100px;
     height: 500px;
     background-color: darkgray;
     border-radius: 5px;
     text-align: center;
     margin-top: 10px;
+}
+
+#cville{
+    margin-left: 410px;
+    margin-right: 410px;
+    height: 350px;
+    background-color: darkgrey;
+    border-radius: 10px;
+    /*text-align: center;*/
+    margin-top: 30px;
+    padding-left: 40px;
+    padding-top: 10px;
+}
+a img{
+    border-radius: 10px;
+    margin-left: 10px;
+}
+a img:hover{
+  background-color: red; 
+}
+a {
+    outline: 0;
+    padding: 1px;
+}
+.disk{
+    background-image: url(../image/sabc_logo.gif);
 }

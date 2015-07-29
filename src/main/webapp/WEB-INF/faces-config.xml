@@ -15,8 +15,8 @@
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>connexionadmin</from-outcome>
-            <to-view-id>/menu.xhtml</to-view-id>
+            <from-outcome>connexion</from-outcome>
+            <to-view-id>/choixville.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>erreur</from-outcome>
@@ -94,7 +94,4 @@
         </navigation-case>
         
     </navigation-rule>
-    
-    
-    
 </faces-config>

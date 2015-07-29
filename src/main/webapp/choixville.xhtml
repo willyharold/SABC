@@ -4,11 +4,26 @@ To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Les Brasseries du Cameroun </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="css/corps.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/gif" href="image/logo.gif" />
+    </h:head>
+    <h:body>
+        <div>
+       <ui:include src="entete_choix.xhtml" />
+        </div>
+        <div id="cville">
+            <p:commandLink action="#{orientationBean.liste_agences()}" ><img src="image/imprimante.png" width="200px" /> </p:commandLink>
+            <a href="#"> <img src="image/cybelite.png" width="100px" /></a> 
+            <a href="#"> <img src="image/etiqueteuse.gif" width="150px" /></a>  
+            <a href="#"> <img src="image/badge.png" width="200px" /></a> 
+        </div>
+    </h:body>
 </html>

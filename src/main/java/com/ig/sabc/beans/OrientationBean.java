@@ -21,7 +21,7 @@ public class OrientationBean {
     }
     
     public String connexion(){
-        return "connexionadmin";
+        return "connexion";
     }
     
     public String liste_agences(){
@@ -55,5 +55,8 @@ public class OrientationBean {
     
      public String consommable(){
         return "consommable";
+    }
+     public String choix(){
+        return "imprimante";
     }
 }

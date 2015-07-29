@@ -154,7 +154,7 @@ public class CompteBean implements SelectableDataModel<Compte>{
         try {
             compte1= compteServ.FindByLogin(compte.getIdentifiant());
             if(compte1.getMot_passe().compareTo(compte.getMot_passe())==0)
-                return "connexionadmin";
+                return "connexion";
         } catch (Exception e) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Contactez l'administrateur."));
                 
