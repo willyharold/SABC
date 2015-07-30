@@ -56,7 +56,7 @@ public class OrientationBean {
      public String consommable(){
         return "consommable";
     }
-     public String choix(){
+     public String imprimante(){
         return "imprimante";
     }
 }
