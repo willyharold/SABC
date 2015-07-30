@@ -94,4 +94,12 @@
         </navigation-case>
         
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/choixville.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>imprimante</from-outcome>
+            <to-view-id>/menu.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
 </faces-config>

@@ -23,7 +23,7 @@
     </servlet-mapping>
     <welcome-file-list>        
         <welcome-file>
-            faces/index.xhtml
+            faces/choixville.xhtml
         </welcome-file>
     </welcome-file-list>
     <listener>        
