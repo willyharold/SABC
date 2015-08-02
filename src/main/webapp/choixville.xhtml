@@ -20,12 +20,14 @@ and open the template in the editor.
        <ui:include src="entete_choix.xhtml" />
         </div>
         <div id="cville">
-            <p:commandLink action="#{orientationBean.imprimante()}" >
+            <h:form>
+            <h:commandLink action="#{orientationBean.imprimante()}" >
                 <p:graphicImage value="image/imprimante.png" width="200px" /> 
-            </p:commandLink>
+            </h:commandLink>
             <a href="#"> <img src="image/cybelite.png" width="100px" /></a> 
             <a href="#"> <img src="image/etiqueteuse.gif" width="150px" /></a>  
             <a href="#"> <img src="image/badge.png" width="200px" /></a>
+            </h:form>
         </div>
     </h:body>
 </html>
