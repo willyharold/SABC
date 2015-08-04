@@ -22,14 +22,16 @@ and open the template in the editor.
         <div id="conten">
             <h:form id="list">
                     <p:contextMenu for="agentTable">     
-                        <p:menuitem value="Commander de l'encre" onclick="PF('modifierDialog').show()" icon="ui-icon-home"  update=":saveform:display" />
-                        <p:menuitem value="Commander du papier" onclick="PF('ajouter_dialog').show()" icon="ui-icon-pencil"  update=":updatform:display"/> 
+                        
+                        <p:menuitem value="Commander de l'encre" onclick="PF('modifierDialog').show()" icon="ui-icon-pencil"  update=":updatform:display"/> 
+                        <p:menuitem value="Commander des formats" onclick="PF('PaperDialog').show()" icon="ui-icon-pencil"  update=":saveform:display"/> 
+                         
                     </p:contextMenu>
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                     <p:dataTable  var="imprimante" id="agentTable" value="#{commandeBean.imprimantes}" selection="#{commandeBean.imprimante}" selectionMode="single" rowKey="#{imprimante.id}" paginator="true" rows="10">  
 
                         <f:facet name="header">  
-                            Liste des imprimantes
+                            Liste des imprimantes en service
                         </f:facet> 
 
                         <p:column headerText="identitifiant" filterBy="#{imprimante.identifiant}" sortBy="#{imprimante.identifiant}">
@@ -44,48 +46,51 @@ and open the template in the editor.
                             <h:outputText value="#{imprimante.date.time}">
                                  <f:convertDateTime pattern="dd/MM/yyy" type="date" />
                             </h:outputText>  
-                        </p:column>
-                       
+                        </p:column> 
                     </p:dataTable> 
                 </h:form>
-                <p:dialog id="dialog" header="Commander de l'encre" widgetVar="modifierDialog" resizable="false"  
+                <p:dialog id="dialog" header="commander de l'encre" widgetVar="modifierDialog" resizable="false"  
                           width="400" showEffect="clip" >  
                     <h:form id ="updatform">
                         <h:panelGrid id="display" columns="2" >  
+                            <h:outputText value="identifiant"/> 
+                            <p:outputLabel  id="upd_iden" value="#{commandeBean.imprimante.identifiant}" /> 
                             <h:outputText value="type d'encre"/> 
                             <p:selectOneMenu id="encre" value="#{commandeBean.type_encre}" required="true" style=" width:100%;">
                                 <f:selectItems value="#{commandeBean.list}" />  
-                            </p:selectOneMenu>
-                            
+                            </p:selectOneMenu>                           
                             <h:outputText value="nombre de cartouche"/> 
                             <p:inputText  id="nbr_encre" value="#{commandeBean.encre.nbr_encre}" required="true" /> 
-
+                           
                             <h:inputHidden  id="udp_id" value="#{commandeBean.imprimante.id}"/> 
                             <f:facet name="footer"> <br/> 
-                                <p:commandButton value="Commander" action="#{commandeBean.saveInk()}"  oncomplete="PF('modifierDialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
+                                <p:commandButton value="Enregistrer" action="#{commandeBean.saveInk()}"  oncomplete="PF('modifierDialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
                             </f:facet>
                             <f:facet name="footer">  
-                                <p:commandButton value="fermer" onclick="PF('modifierDialog').hide()" />  
+                                <p:commandButton value="Fermer" onclick="PF('modifierDialog').hide()" />  
                             </f:facet>
                         </h:panelGrid> 
                     </h:form>
-                </p:dialog>       
-
-               <p:dialog id="save" header="Commander du papier" widgetVar="ajouter_dialog" resizable="false" width="400" showEffect="clip" > 
-                   <h:form id ="saveform">
+                </p:dialog>     
+                <p:dialog id="Paper_dialog" header="commander des papier" widgetVar="PaperDialog" resizable="false"  
+                          width="400" showEffect="clip" >  
+                    <h:form id ="saveform">
                         <h:panelGrid id="display" columns="2" >  
-                            <h:outputText value="nombre de ram de papier"/> 
-                            <p:inputText  id="iden" value="#{commandeBean.papier.nbr_papier}" required="true"/> 
-
-                            <f:facet name="footer"> <br/>  
-                                <p:commandButton value="Commander" action="#{imprimanteBean.enregistrer()}"  oncomplete="PF('ajouter_dialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
+                            <h:outputText value="identifiant"/> 
+                            <p:outputLabel  id="iden" value="#{commandeBean.imprimante.identifiant}" /> 
+                            <h:outputText value="Nombre de ram"/> 
+                            <p:inputText  id="nbr_ram" value="#{commandeBean.papier.nbr_papier}" required="true" /> 
+                           
+                            <h:inputHidden  id="id" value="#{commandeBean.imprimante.id}"/> 
+                            <f:facet name="footer"> <br/> 
+                                <p:commandButton value="Enregistrer" action="#{commandeBean.savePaper()}"  oncomplete="PF('PaperDialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
                             </f:facet>
                             <f:facet name="footer">  
-                                <p:commandButton value="Fermer" onclick="PF('ajouter_Dialog').hide()" />  
+                                <p:commandButton value="Fermer" onclick="PF('PaperDialog').hide()" />  
                             </f:facet>
                         </h:panelGrid> 
                     </h:form>
-               </p:dialog>
+                </p:dialog>     
         </div>
     </h:body>
 </html>

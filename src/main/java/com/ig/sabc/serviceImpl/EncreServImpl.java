@@ -9,6 +9,7 @@ import com.ig.sabc.dao.IEncreDao;
 import com.ig.sabc.daoImpl.EncreDaoImpl;
 import com.ig.sabc.entities.Encre;
 import com.ig.sabc.service.IEncreServ;
+import java.util.Date;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +48,14 @@ public class EncreServImpl implements IEncreServ{
 
     public Encre update(Encre t) throws DataAccessException {
         return encre.update(t); 
+    }
+
+    public List<Encre> findbyImp(Long id) throws DataAccessException {
+        return encre.encrebyimp(id);
+    }
+
+    public List<Encre> findbydate(Date d1, Date d2) throws DataAccessException {
+        return encre.encrebydate(d1, d2);
     }
     
 }

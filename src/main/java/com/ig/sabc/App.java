@@ -2,14 +2,20 @@ package com.ig.sabc;
 
 import com.douwe.generic.dao.DataAccessException;
 import com.ig.sabc.entities.Agence;
+import com.ig.sabc.entities.Encre;
 import com.ig.sabc.entities.Message;
 import com.ig.sabc.entities.Service;
 import com.ig.sabc.service.IAgenceServ;
+import com.ig.sabc.service.IEncreServ;
 import com.ig.sabc.service.IMessageServ;
 import com.ig.sabc.service.IServiceServ;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -54,11 +60,16 @@ public class App
 //        
 //        int c = agenceServ.PersonnefindByagence(1L);
         
-        
-          IServiceServ serviceServ = (IServiceServ)ctx.getBean("IServiceServ");
-          List<Service> services = serviceServ.findAllbyAgence(32768L);
-          for (Service service : services) {
-              System.out.println(service);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+          IEncreServ encreServ = (IEncreServ)ctx.getBean("IEncreServ");
+          List<Encre> encres = null;
+        try {
+            encres = encreServ.findbydate(dateFormat.parse("2015-01-01"),dateFormat.parse("2015-12-31"));
+        } catch (ParseException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          for (Encre encre : encres) {
+              System.out.println(encre.getImprimante().getIdentifiant());
         }
 
 //        

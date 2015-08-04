@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,6 +24,11 @@ import javax.persistence.TemporalType;
  * @author root
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "encre.Byimprimante",query = " SELECT e from Imprimante i, Encre e WHERE i.id = e.imprimante AND e.id = :param"),
+    @NamedQuery(name = "encre.Bydate",query = " SELECT e from Encre e WHERE e.date_debut BETWEEN :param1 AND :param2"),
+})
+
 public class Encre implements Serializable{
     
     @Id

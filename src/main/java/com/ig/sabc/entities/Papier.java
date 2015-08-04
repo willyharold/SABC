@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,6 +22,8 @@ import javax.persistence.TemporalType;
  * @author root
  */
 @Entity
+@NamedQueries({@NamedQuery(name = "papier.Byimprimante",query = " SELECT p from Imprimante i, Papier p WHERE i.id = p.imprimante AND p.id = :param"),
+})
 public class Papier implements Serializable{
     
     @Id

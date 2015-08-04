@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Les Brasseries du Cameroun </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../css/corps.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/gif" href="../image/logo.gif" />
+    </h:head>
+    <h:body>
+        <div>
+       <ui:include src="../menu.xhtml" />
+        </div>
+        <div id="conten">
+            <h:form id="list">
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:dataTable  var="papier" id="agentTable" value="#{papierBean.papiers}" paginator="true" rows="10">  
+
+                        <f:facet name="header">  
+                            Consommation des papiers
+                        </f:facet> 
+
+                        <p:column headerText="imprimante" filterBy="#{papier.imprimante.identifiant}" sortBy="#{papier.imprimante.identifiant}">
+
+                            <h:outputText value="#{papier.imprimante.identifiant}" />  
+                        </p:column> 
+                        <p:column headerText="nombre de ram" filterBy="#{papier.nbr_papier}">  
+                            <h:outputText value="#{papier.nbr_papier}"/> 
+                        </p:column>
+                        <p:column headerText="date de la commande" filterBy="#{papier.date_debut.time}">  
+                            <h:outputText value="#{papier.date_debut.time}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                            </h:outputText>  
+                        </p:column>
+                    </p:dataTable> 
+                </h:form>
+        </div>    
+    </h:body>
+</html>

@@ -16,7 +16,7 @@
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>connexion</from-outcome>
-            <to-view-id>/choixville.xhtml</to-view-id>
+            <to-view-id>/equipement.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>erreur</from-outcome>
@@ -95,10 +95,54 @@
         
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/choixville.xhtml</from-view-id>
+        <from-view-id>/*</from-view-id>
         <navigation-case>
-            <from-outcome>imprimante</from-outcome>
+            <from-outcome>imprimant</from-outcome>
             <to-view-id>/menu.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>encre</from-outcome>
+            <to-view-id>/imprimante/liste_encres.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>papier</from-outcome>
+            <to-view-id>/imprimante/liste_papier.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>total</from-outcome>
+            <to-view-id>/statistique/Total.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>mensuelle</from-outcome>
+            <to-view-id>/statistique/mensuelle.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>annuelle</from-outcome>
+            <to-view-id>/statistique/annuelle.xhtml</to-view-id>
         </navigation-case>
         
     </navigation-rule>

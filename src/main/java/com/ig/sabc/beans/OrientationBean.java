@@ -57,6 +57,26 @@ public class OrientationBean {
         return "consommable";
     }
      public String imprimante(){
-        return "imprimante";
+        return "imprimant";
     }
+     public String encre(){
+         return "encre";
+     }
+     
+     public String paper(){
+         return "papier";
+     }
+     
+     public String total(){
+         return "total";
+     }
+     
+     public String mensuelle(){
+         return "mensuelle";
+     }
+     
+     public String annuelle(){
+         return "annuelle";
+     }
+     
 }

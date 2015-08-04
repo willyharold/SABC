@@ -59,5 +59,7 @@ public class ImprimanteServImpl implements IImprimanteServ{
         imprimante.delete(imprimante.findById(id));
     }
     
-    
+    public List<Imprimante> findAllservice() throws DataAccessException {
+        return imprimante.FindALLenservice();
+    }
 }

@@ -35,11 +35,13 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
     IEncreServ encreServ;
     Encre encre = new Encre();
     private String type_encre;
+    private List<Encre> encres = new LinkedList<Encre>();
     
     @ManagedProperty(value = "#{IPapierServ}")
     IPapierServ papierServ;
     Papier papier = new Papier();
     private List<String> list = new LinkedList<String>();
+    private List<Papier> papiers = new LinkedList<Papier>();
 
     @ManagedProperty(value = "#{IImprimanteServ}")
     IImprimanteServ imprimanteServ;
@@ -68,7 +70,7 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
 
     public List<Imprimante> getImprimantes() {
         try {
-            imprimantes = imprimanteServ.findAll();
+            imprimantes = imprimanteServ.findAllservice();
         } catch (DataAccessException ex) {
             Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -132,20 +134,52 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
     
     
     public void saveInk(){
-        System.out.println(imprimante.getIdentifiant());
-//        if(type_encre.compareTo("NOIR")==0)
-//            encre.setEncreType(EncreType.NOIR);
-//        else
-//            encre.setEncreType(EncreType.COULEUR);
-//        encre.setDate_debut(Calendar.getInstance());
-//        try {
-//            encre.setImprimante(imprimanteServ.findById(imprimante.getId()));
-//            encreServ.create(encre);
-//        } catch (DataAccessException ex) {
-//            Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        System.out.println(imprimante.getId());
+        try {
+            encres = encreServ.findbyImp(imprimante.getId());
+        } catch (DataAccessException ex) {
+            Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (encres.isEmpty()) {
+            if (type_encre.compareTo("NOIR") == 0) {
+                encre.setEncreType(EncreType.NOIR);
+            } else {
+                encre.setEncreType(EncreType.COULEUR);
+            }
+            encre.setDate_debut(Calendar.getInstance());
+            try {
+                encre.setImprimante(imprimanteServ.findById(imprimante.getId()));
+                encreServ.create(encre);
+            } catch (DataAccessException ex) {
+                Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+    
+    public void savePaper(){
+         System.out.println(imprimante.getId()); 
+        try {
+            papiers = papierServ.findbyImp(imprimante.getId());
+        } catch (DataAccessException ex) {
+            Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+        
+            papier.setDate_debut(Calendar.getInstance());
+             try {
+                 papier.setImprimante(imprimanteServ.findById(imprimante.getId()));
+             } catch (DataAccessException ex) {
+                 Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+             }
+            try {
+                papierServ.create(papier);
+            } catch (DataAccessException ex) {
+                Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
         
     }
+    
     @Override
     public Object getRowKey(Imprimante t) {
         return t.getId();
@@ -161,5 +195,5 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
         }
         return null;
     }
-    
+
 }

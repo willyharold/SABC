@@ -2,7 +2,7 @@ body{
     height: 700px;
     width: 1284px;
     margin: auto;
-    background-color: white;
+    background-color: darkgray;
 }
 
 #logo2{
@@ -38,7 +38,7 @@ body{
 #entete{
     height: 96px;
     width: auto;
-    background-color: darkgray;
+    background-color: white;
     border-radius: 5px;
     margin-top: 10px;
     margin-left: 100px;
@@ -54,12 +54,31 @@ body{
     text-align: center;
     margin-top: 10px;
 }
+#conten_stat{
+    margin-left: 100px;
+    margin-right: 100px;
+    height: 500px;
+    background-color: white;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#conten_stat_an{
+    margin-left: 100px;
+    margin-right: 100px;
+    height: 650px;
+    background-color: white;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 10px;
+}
 
 #cville{
     margin-left: 410px;
     margin-right: 410px;
     height: 350px;
-    background-color: darkgrey;
+    background-color: white;
     border-radius: 10px;
     /*text-align: center;*/
     margin-top: 30px;

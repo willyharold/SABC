@@ -49,5 +49,9 @@ public class PapierServImpl implements IPapierServ{
     public Papier update(Papier t) throws DataAccessException {
         return papier.update(t);
     }
+
+    public List<Papier> findbyImp(Long id) throws DataAccessException {
+        return papier.papierbyimp(id);
+    }
     
 }

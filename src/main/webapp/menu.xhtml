@@ -32,12 +32,12 @@ and open the template in the editor.
                  
                 <p:submenu label="Agence" icon="ui-icon-folder-collapsed">  
                     <p:menuitem value="Liste d'agence" action="#{orientationBean.liste_agences()}" icon="ui-icon-document" />
-                    <p:menuitem value="Importer agences" url="/entreprise/creationentreprise.xhtml" icon="ui-icon-plus" />
+                    <p:menuitem value="Importer agences" url="#" icon="ui-icon-plus" />
                     
                 </p:submenu>
                 <p:submenu label="Service" icon="ui-icon-folder-collapsed">       
                     <p:menuitem value="Liste services" action="#{orientationBean.liste_services()}" icon="ui-icon-plus" />
-                    <p:menuitem value="Importer service" url="/document/listesdocuments.xhtml" icon="ui-icon-plus" />
+                    <p:menuitem value="Importer service" url="#" icon="ui-icon-plus" />
                 </p:submenu>
                 <p:submenu label="Personnel" icon="ui-icon-bookmark">  
                     <p:menuitem value="Liste personnels" action="#{orientationBean.liste_personnels()}" icon="ui-icon-arrowreturnthick-1-w" />  
@@ -48,8 +48,13 @@ and open the template in the editor.
                     
                 </p:submenu>
                 
-                <p:submenu label="Imprimante" icon="ui-icon-person">  
-                    <p:menuitem value="Liste d'imprimante" action="#{orientationBean.liste_imprimantes()}" icon="ui-icon-document" />
+                <p:submenu label="Imprimante" icon="ui-icon-person"> 
+                    <p:submenu label="Liste" icon="ui-icon-person">
+                        <p:menuitem value="Liste d'imprimante" action="#{orientationBean.liste_imprimantes()}" icon="ui-icon-document" />
+                        <p:menuitem value="Conso d'Encre"  action="#{orientationBean.encre()}" icon="ui-icon-document" />
+                        <p:menuitem value="Conso de Papier" action="#{orientationBean.paper()}" icon="ui-icon-document" />
+                    </p:submenu>
+                    
                     <p:menuitem value="Commander du conso" action="#{orientationBean.consommable()}" icon="ui-icon-plus" />  
                     <p:menuitem value="Importer imprimantes" icon="ui-icon-plus" />  
                     
@@ -59,8 +64,9 @@ and open the template in the editor.
                 </p:submenu>
                 
                 <p:submenu label="Statistiques" icon="ui-icon-bookmark">  
-                    <p:menuitem value="Annuelle"  icon="ui-icon-arrowreturnthick-1-w" />  
-                    <p:menuitem value="Totale" url="#" icon="ui-icon-arrowreturnthick-1-e" />
+                    <p:menuitem value="Mensuelle" action="#{orientationBean.mensuelle()}" icon="ui-icon-arrowreturnthick-1-w" />  
+                    <p:menuitem value="Annuelle" action="#{orientationBean.annuelle()}" icon="ui-icon-arrowreturnthick-1-w" />  
+                    <p:menuitem value="Totale" action="#{orientationBean.total()}" icon="ui-icon-arrowreturnthick-1-e" />
                 </p:submenu>
                 
                 <p:submenu label="Compte" icon="ui-icon-wrench">  

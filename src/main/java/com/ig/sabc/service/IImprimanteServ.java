@@ -20,6 +20,8 @@ public interface IImprimanteServ{
     public List<Imprimante> findAll() throws DataAccessException;
 
     public Imprimante create(Imprimante t) throws DataAccessException;
+    
+    public List<Imprimante> findAllservice() throws DataAccessException;
 
     public void delete(Imprimante t) throws DataAccessException;
 

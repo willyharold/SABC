@@ -18,6 +18,8 @@ public interface IPapierServ{
     public Papier findById(Long id) throws DataAccessException;
 
     public List<Papier> findAll() throws DataAccessException;
+    
+    public List<Papier> findbyImp(Long id) throws DataAccessException;
 
     public Papier create(Papier t) throws DataAccessException;
 

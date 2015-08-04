@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
 @Entity
 @NamedQueries({
 @NamedQuery(name = "imprimante.findbyiden",query = " SELECT i from Imprimante i WHERE i.identifiant = :param"),
+@NamedQuery(name = "imprimanteEnservice",query = " SELECT DISTINCT (i) from Imprimante i, Personne p WHERE p.imprimante=i.id"),
 })
 public class Imprimante implements Serializable{
     

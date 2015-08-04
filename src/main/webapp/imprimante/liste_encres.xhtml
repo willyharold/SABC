@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Les Brasseries du Cameroun </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../css/corps.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/gif" href="../image/logo.gif" />
+    </h:head>
+    <h:body>
+        <div>
+       <ui:include src="../menu.xhtml" />
+        </div>
+        <div id="conten">
+            <h:form id="list">
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:dataTable  var="encre" id="agentTable" value="#{encreBean.encres}" paginator="true" rows="10">  
+
+                        <f:facet name="header">  
+                            Consommation d'encre
+                        </f:facet> 
+
+                        <p:column headerText="imprimante" filterBy="#{encre.imprimante.identifiant}" sortBy="#{encre.imprimante.identifiant}">
+
+                            <h:outputText value="#{encre.imprimante.identifiant}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="type" filterBy="#{encre.encreType}">  
+                            <h:outputText value="#{encre.encreType}"/> 
+                        </p:column>
+                        <p:column headerText="nombre de cartouche" filterBy="#{encre.nbr_encre}">  
+                            <h:outputText value="#{encre.nbr_encre}"/> 
+                        </p:column>
+                        <p:column headerText="date de la commande" filterBy="#{encre.date_debut.time}">  
+                            <h:outputText value="#{encre.date_debut.time}">
+                                 <f:convertDateTime pattern="dd/MM/yyy" type="date" />
+                            </h:outputText>  
+                        </p:column>
+                    </p:dataTable> 
+                </h:form>
+        </div>    
+    </h:body>
+</html>
