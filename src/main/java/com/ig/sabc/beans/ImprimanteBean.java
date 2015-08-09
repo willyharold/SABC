@@ -40,7 +40,6 @@ public class ImprimanteBean implements SelectableDataModel<Imprimante>{
     @ManagedProperty(value = "#{ICategorieServ}")
     ICategorieServ categorieServ;
     private List<ImprimanteCategorie> categories = new LinkedList<ImprimanteCategorie>();
-    private List<ImprimanteCategorie> categories1 = new LinkedList<ImprimanteCategorie>();
     private String cat;
     @ManagedProperty(value = "#{IServiceServ}")
     IServiceServ serviceServ;  
@@ -128,20 +127,19 @@ public class ImprimanteBean implements SelectableDataModel<Imprimante>{
     }
     
     public void enregistrer(){
-        try {
+        List<ImprimanteCategorie> categories1 = new LinkedList<ImprimanteCategorie>();
+         try {
             categories1 = categorieServ.findAll();
         } catch (DataAccessException ex) {
             Logger.getLogger(ImprimanteBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         ImprimanteCategorie ic = new ImprimanteCategorie();
-        for (ImprimanteCategorie categorie : categories1) {
-            if(categorie.getCategorie()==Integer.valueOf(cat))
-                ic=categorie;
-                break;
+        for (ImprimanteCategorie categories11 : categories1) {
+            System.out.println("liste des ids des categories "+categories11.getId());
+            if(categories11.getCategorie()==Integer.valueOf(cat))
+                ic=categories11;
         }
-        
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, 1);
         imprimante.setCategorie(ic);
         imprimante.setDate(calendar);
         try {
@@ -152,19 +150,18 @@ public class ImprimanteBean implements SelectableDataModel<Imprimante>{
     }
     
     public void modifier(){
-        
+         List<ImprimanteCategorie> categories1 = new LinkedList<ImprimanteCategorie>();
          try {
             categories1 = categorieServ.findAll();
         } catch (DataAccessException ex) {
             Logger.getLogger(ImprimanteBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         ImprimanteCategorie ic = new ImprimanteCategorie();
-        for (ImprimanteCategorie categorie : categories1) {
-            if(categorie.getCategorie()==Integer.valueOf(cat))
-                ic=categorie;
-                break;
+        for (ImprimanteCategorie categories11 : categories1) {
+            System.out.println("liste des ids des categories "+categories11.getId());
+            if(categories11.getCategorie()==Integer.valueOf(cat))
+                ic=categories11;
         }
-        
         Calendar calendar = Calendar.getInstance();
         imprimante.setCategorie(ic);
         imprimante.setDate(calendar);

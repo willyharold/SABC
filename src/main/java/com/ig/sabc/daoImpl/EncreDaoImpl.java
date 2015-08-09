@@ -26,5 +26,9 @@ public class EncreDaoImpl extends GenericDao<Encre, Long> implements IEncreDao{
     public List<Encre> encrebydate(Date date1, Date date2) throws DataAccessException {
                  return (List<Encre>)(getManager().createNamedQuery("encre.Bydate").setParameter("param1", date1,TemporalType.DATE).setParameter("param2", date2,TemporalType.DATE).getResultList());
     }
+
+    public List<Encre> encrebytype(Date date1, Date date2, Enum type) throws DataAccessException {
+                 return (List<Encre>)(getManager().createNamedQuery("encre.Bytype").setParameter("param1", date1,TemporalType.DATE).setParameter("param2", date2,TemporalType.DATE).setParameter("param3", type).getResultList());
+    }
     
 }

@@ -37,9 +37,14 @@ and open the template in the editor.
                             <h:outputText value="#{categorie.categorie}" />  
                         </p:column> 
                         
-                        <p:column headerText="nombre d'encre" filterBy="#{categorie.nbre_encre}" sortBy="#{categorie.nbre_encre}">
+                        <p:column headerText="nombre d'encre noir" filterBy="#{categorie.nbre_encre}" sortBy="#{categorie.nbre_encre}">
 
                             <h:outputText value="#{categorie.nbre_encre}" />  
+                        </p:column> 
+                        
+                        <p:column headerText="nombre d'encre couleur" filterBy="#{categorie.nbre_encre_c}" sortBy="#{categorie.nbre_encre_c}">
+
+                            <h:outputText value="#{categorie.nbre_encre_c}" />  
                         </p:column> 
                         
                         <p:column headerText="nombre de ram de papier" filterBy="#{categorie.nbre_format}" sortBy="#{categorie.nbre_format}">
@@ -51,7 +56,7 @@ and open the template in the editor.
                         </f:facet> 
                     </p:dataTable> 
                 </h:form>
-                <p:dialog id="dialog" header="Modifier une personne" widgetVar="modifierDialog" resizable="false"  
+                <p:dialog id="dialog" header="Modifier une categorie" widgetVar="modifierDialog" resizable="false"  
                           width="400" showEffect="clip" >  
                     <h:form id ="updatform">
                         <h:panelGrid id="display" columns="2" >  
@@ -61,9 +66,13 @@ and open the template in the editor.
                             <h:outputText value="nombre de ram "/> 
                             <p:inputText  id="sup_iden2" value="#{categorieBean.categorie.nbre_format}" style=" width:95%;"/> 
                            
-                            <h:outputText value="nombre de cartouche"/> 
+                            <h:outputText value="nombre de cartouche noir"/> 
 
                             <p:inputText  id="sup_iden" value="#{categorieBean.categorie.nbre_encre}" style=" width:95%;"/> 
+
+                            <h:outputText value="nombre de cartouche couleur"/> 
+
+                            <p:inputText  id="sup_iden_c" value="#{categorieBean.categorie.nbre_encre_c}" style=" width:95%;"/> 
                             
                             <h:inputHidden  id="udp_id" value="#{categorieBean.categorie.id}"/> 
                             <f:facet name="footer"> <br/> 
@@ -96,10 +105,13 @@ and open the template in the editor.
                             <h:outputText value="nombre de ram "/> 
                             <p:inputText  id="iden2" value="#{categorieBean.categorie.nbre_format}" style=" width:95%;"/> 
                            
-                            <h:outputText value="nombre de cartouche"/> 
+                            <h:outputText value="nombre de cartouche noir "/> 
 
                             <p:inputText  id="iden" value="#{categorieBean.categorie.nbre_encre}" style=" width:95%;"/> 
-                            
+                          
+                            <h:outputText value="nombre de cartouche couleur "/> 
+
+                            <p:inputText  id="iden3" value="#{categorieBean.categorie.nbre_encre_c}" style=" width:95%;"/>                            
                             <f:facet name="footer"> <br/>  
                                 <p:commandButton value="Enregistrer" action="#{categorieBean.enregistrer()}"  oncomplete="PF('ajouter_dialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
                             </f:facet>

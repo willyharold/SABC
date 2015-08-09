@@ -21,6 +21,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
@@ -31,7 +32,7 @@ import org.primefaces.model.chart.LineChartSeries;
  * @author root
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class StatistiqueBean implements Serializable{
     
     private LineChartModel dataModel;
@@ -52,6 +53,14 @@ public class StatistiqueBean implements Serializable{
 
     public void setAnnée(String année) {
         this.année = année;
+    }
+
+    public String getAnnée2() {
+        return année2;
+    }
+
+    public void setAnnée2(String année2) {
+        this.année2 = année2;
     }
     
     
@@ -105,20 +114,25 @@ public class StatistiqueBean implements Serializable{
         année = année + "-01"+"-01";
         année2 = année2+ "-12" + "-31";
         anneefinal = année;
+        createLineModels();
 //        année = "2015-01-01";
 //        année2="2015-12-31"; 
        // createLineModels();
         
     }
-    private void createLineModels() {
+    public void createLineModels() {
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        
         Date d1 = null;
         Date d2 = null;
-        année = "2015";
+        if(getAnnée()==null)
+            année = "2015";
         année2 = année;        
         année = année + "-01"+"-01";
-        année2 = année2+ "-12" + "-31";//quand je ne mets pas année dans cette methode, annéée est constament null! pourquoi??
+        année2 = année2+ "-12" + "-31";
+//quand je ne mets pas année dans cette methode, annéée est constament null! pourquoi??
+        System.out.println(année);
         if(!(année==null)){
             
         try {

@@ -7,11 +7,12 @@ package com.ig.sabc.beans;
 
 import com.douwe.generic.dao.DataAccessException;
 import com.ig.sabc.entities.Encre;
-import com.ig.sabc.entities.EncreType;
 import com.ig.sabc.entities.Imprimante;
+import com.ig.sabc.entities.Message;
 import com.ig.sabc.entities.Papier;
 import com.ig.sabc.service.IEncreServ;
 import com.ig.sabc.service.IImprimanteServ;
+import com.ig.sabc.service.IMessageServ;
 import com.ig.sabc.service.IPapierServ;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -48,7 +49,10 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
     private Imprimante imprimante = new Imprimante();
     private List<Imprimante> imprimantes = new LinkedList<Imprimante>();
 
-    
+    @ManagedProperty(value = "#{IMessageServ}")
+    IMessageServ messageServ;
+    List<Message> messages = new LinkedList<Message>();
+    Message message = new Message();
     
     
     
@@ -134,25 +138,31 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
     
     
     public void saveInk(){
-        System.out.println(imprimante.getId());
+        //System.out.println(imprimante.getId());
         try {
             encres = encreServ.findbyImp(imprimante.getId());
         } catch (DataAccessException ex) {
             Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (encres.isEmpty()) {
-            if (type_encre.compareTo("NOIR") == 0) {
-                encre.setEncreType(EncreType.NOIR);
-            } else {
-                encre.setEncreType(EncreType.COULEUR);
-            }
-            encre.setDate_debut(Calendar.getInstance());
-            try {
-                encre.setImprimante(imprimanteServ.findById(imprimante.getId()));
-                encreServ.create(encre);
-            } catch (DataAccessException ex) {
-                Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            if (type_encre.compareTo("NOIR") == 0) {
+//                encre.setEncreType(EncreType.NOIR);
+//            } else {
+//                encre.setEncreType(EncreType.COULEUR);
+//            }
+//            encre.setDate_debut(Calendar.getInstance());
+//            try {
+//                encre.setImprimante(imprimanteServ.findById(imprimante.getId()));
+//                encreServ.create(encre);
+//            } catch (DataAccessException ex) {
+//                Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+        }
+        try {
+            encreServ.detect_encre(imprimanteServ.findById(imprimante.getId()));
+        } catch (DataAccessException ex) {
+            System.out.println("il ya une erreur");
+            Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -196,4 +206,45 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
         return null;
     }
 
+    public List<Encre> getEncres() {
+        return encres;
+    }
+
+    public void setEncres(List<Encre> encres) {
+        this.encres = encres;
+    }
+
+    public List<Papier> getPapiers() {
+        return papiers;
+    }
+
+    public void setPapiers(List<Papier> papiers) {
+        this.papiers = papiers;
+    }
+
+    public IMessageServ getMessageServ() {
+        return messageServ;
+    }
+
+    public void setMessageServ(IMessageServ messageServ) {
+        this.messageServ = messageServ;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
+    }
+    
+    
 }

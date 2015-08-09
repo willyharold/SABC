@@ -30,4 +30,6 @@ public interface IImprimanteServ{
     public Imprimante findByiden(String t) throws DataAccessException;
     
     public void delete(Long id) throws DataAccessException;
+    
+    
 }

@@ -27,6 +27,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "encre.Byimprimante",query = " SELECT e from Imprimante i, Encre e WHERE i.id = e.imprimante AND e.id = :param"),
     @NamedQuery(name = "encre.Bydate",query = " SELECT e from Encre e WHERE e.date_debut BETWEEN :param1 AND :param2"),
+    @NamedQuery(name = "encre.Bytype",query = " SELECT e from Encre e WHERE e.date_debut BETWEEN :param1 AND :param2 AND e.encreType=:param3"),
 })
 
 public class Encre implements Serializable{

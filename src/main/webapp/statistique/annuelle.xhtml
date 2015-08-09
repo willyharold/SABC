@@ -25,7 +25,7 @@ and open the template in the editor.
                     <h:panelGrid columns="3" cellpadding ="10">
                         <p:outputLabel value="Année"/>
                         <p:inputText value="#{statistiqueBean.année}" required="true"/>
-                        <p:commandButton value="Envoyer" action="#{statistiqueBean.envoyer()}" update=":stat"  />  
+                        <p:commandButton value="Envoyer" action="#{statistiqueBean.createLineModels()}" update=":stat"  />  
                     </h:panelGrid>  
                 </p:panel>
             </h:form> 

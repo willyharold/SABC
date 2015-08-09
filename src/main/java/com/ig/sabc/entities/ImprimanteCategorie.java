@@ -7,6 +7,8 @@ package com.ig.sabc.entities;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,19 @@ public class ImprimanteCategorie implements Serializable{
     
     @Column(nullable = false)
     private int nbre_encre;
+
+    @Column(nullable = false)
+    private int nbre_encre_c;
+
+
+    
+    public int getNbre_encre_c() {
+        return nbre_encre_c;
+    }
+
+    public void setNbre_encre_c(int nbre_encre_c) {
+        this.nbre_encre_c = nbre_encre_c;
+    }
 
     public int getNbre_format() {
         return nbre_format;

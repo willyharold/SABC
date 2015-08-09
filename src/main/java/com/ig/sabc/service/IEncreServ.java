@@ -7,6 +7,7 @@ package com.ig.sabc.service;
 import com.douwe.generic.dao.DataAccessException;
 import com.ig.sabc.dao.IEncreDao;
 import com.ig.sabc.entities.Encre;
+import com.ig.sabc.entities.Imprimante;
 import java.util.Date;
 import java.util.List;
 
@@ -24,9 +25,13 @@ public interface IEncreServ{
     
     public List<Encre> findbydate(Date d1, Date d2) throws DataAccessException;
     
+    public List<Encre> findbytype(Date d1, Date d2, Enum type) throws DataAccessException;
+    
     public Encre create(Encre t) throws DataAccessException;
     
     public void delete(Encre t) throws DataAccessException;
     
     public Encre update(Encre t) throws DataAccessException; 
+    
+    public void detect_encre(Imprimante i) throws DataAccessException;
 }

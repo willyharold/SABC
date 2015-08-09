@@ -6,6 +6,7 @@ package com.ig.sabc.service;
 
 import com.douwe.generic.dao.DataAccessException;
 import com.ig.sabc.dao.IMessageDao;
+import com.ig.sabc.entities.Imprimante;
 import com.ig.sabc.entities.Message;
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface IMessageServ{
     public void delete(Long t) throws DataAccessException;
     
     public Message update(Message t) throws DataAccessException;
+    
+    public void messageAlerte_noir(Imprimante i, int conso) throws DataAccessException;
 }

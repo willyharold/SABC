@@ -6,9 +6,11 @@
 package com.ig.sabc.beans;
 
 import com.douwe.generic.dao.DataAccessException;
+import com.ig.sabc.entities.Imprimante;
 import com.ig.sabc.entities.Message;
 import com.ig.sabc.service.IMessageServ;
 import com.ig.sabc.service.IServiceServ;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -82,5 +84,5 @@ public class MessagerieBean implements SelectableDataModel<Message>{
     public Message getRowData(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

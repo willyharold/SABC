@@ -67,8 +67,4 @@ public class EncreBean {
         this.encres = encres;
     }
     
-    
-    
-    
-    
 }

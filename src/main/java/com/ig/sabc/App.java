@@ -3,6 +3,7 @@ package com.ig.sabc;
 import com.douwe.generic.dao.DataAccessException;
 import com.ig.sabc.entities.Agence;
 import com.ig.sabc.entities.Encre;
+import com.ig.sabc.entities.EncreType;
 import com.ig.sabc.entities.Message;
 import com.ig.sabc.entities.Service;
 import com.ig.sabc.service.IAgenceServ;
@@ -12,6 +13,7 @@ import com.ig.sabc.service.IServiceServ;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -56,22 +58,72 @@ public class App
 //        message.setStatus(Boolean.TRUE);
 //        messageServ.create(message);
 //        
-//        IAgenceServ agenceServ = (IAgenceServ)ctx.getBean("IAgenceServ");
+//        IAgenceServ agenceServ = ( )ctx.getBean("IAgenceServ");
 //        
 //        int c = agenceServ.PersonnefindByagence(1L);
         
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM");
           IEncreServ encreServ = (IEncreServ)ctx.getBean("IEncreServ");
-          List<Encre> encres = null;
+//          List<Encre> encres = null;
+//        try {
+//            encres = encreServ.findbydate(dateFormat.parse("2015-01-01"),dateFormat.parse("2015-12-31"));
+//        } catch (ParseException ex) {
+//            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//          for (Encre encre : encres) {
+//              System.out.println(encre.getImprimante().getIdentifiant());
+//        }
+        Calendar calendar= Calendar.getInstance();
+        String d1 = null;
+        String d2 = null;
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM");
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy");
+        d1=dateFormat1.format(calendar.getTime())+"-" +dateFormat.format(calendar.getTime())+"-01";
+        d2=dateFormat1.format(calendar.getTime())+"-" +dateFormat.format(calendar.getTime())+"-30";
+        System.out.println(d1);
+        System.out.println(d2);
+        Date date1 = null;
+        Date date2 = null;
         try {
-            encres = encreServ.findbydate(dateFormat.parse("2015-01-01"),dateFormat.parse("2015-12-31"));
+            date1=dateFormat2.parse(d1);
+            date2=dateFormat2.parse(d2);
         } catch (ParseException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-          for (Encre encre : encres) {
-              System.out.println(encre.getImprimante().getIdentifiant());
+        //
+        List<Encre> es = new LinkedList<Encre>();
+       
+        try {
+            es=encreServ.findbytype(date1, date2, EncreType.NOIR);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        int cmpt=0;
+        if(es!=null){
+            for (Encre e : es) {
+                cmpt= cmpt + e.getNbr_encre();
+            }
+        }
+        System.out.println("le nombre d'encre noir est " + cmpt);
+        //JE VIENS DE RECUPERER L'ENSEMEBLE DE CONSOMMATION D'ENCRE NOIR SUR UNE DATE DONNEE
+        //
+        List<Encre> es2 = new LinkedList<Encre>();
+  
+        try {
+            es2 = encreServ.findbytype(date1, date2, EncreType.COULEUR);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int cmpt2 = 0;
+        if(es2!=null){
+            for (Encre es21 : es2) {
+                cmpt2 = cmpt2 + es21.getNbr_encre();
+            }
+        }
+        
+//        //JE VIENS DE RECUPERER L'ENSEMEBLE DE CONSOMMATION D'ENCRE COULEUR SUR UNE DATE DONNEE
+        System.out.println("le nombre d'encre couleur est " + cmpt2);
 //        
 //        System.out.println(c);
        
