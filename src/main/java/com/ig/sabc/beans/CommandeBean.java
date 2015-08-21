@@ -7,6 +7,7 @@ package com.ig.sabc.beans;
 
 import com.douwe.generic.dao.DataAccessException;
 import com.ig.sabc.entities.Encre;
+import com.ig.sabc.entities.EncreType;
 import com.ig.sabc.entities.Imprimante;
 import com.ig.sabc.entities.Message;
 import com.ig.sabc.entities.Papier;
@@ -19,9 +20,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.SelectableDataModel;
 
 /**
@@ -144,31 +147,38 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
         } catch (DataAccessException ex) {
             Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (encres.isEmpty()) {
-//            if (type_encre.compareTo("NOIR") == 0) {
-//                encre.setEncreType(EncreType.NOIR);
-//            } else {
-//                encre.setEncreType(EncreType.COULEUR);
-//            }
-//            encre.setDate_debut(Calendar.getInstance());
-//            try {
-//                encre.setImprimante(imprimanteServ.findById(imprimante.getId()));
-//                encreServ.create(encre);
-//            } catch (DataAccessException ex) {
-//                Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-        }
-        try {
-            encreServ.detect_encre(imprimanteServ.findById(imprimante.getId()));
-        } catch (DataAccessException ex) {
-            System.out.println("il ya une erreur");
-            Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+            if (type_encre.compareTo("NOIR") == 0) {
+                encre.setEncreType(EncreType.NOIR);
+            } else {
+                encre.setEncreType(EncreType.COULEUR);
+            }
+            encre.setDate_debut(Calendar.getInstance());
+            try {
+                encre.setImprimante(imprimanteServ.findById(imprimante.getId()));
+                encreServ.create(encre);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "La commande a été éffectué correctement."));
+
+            } catch (DataAccessException ex) {
+                Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement de la commande."));
+
+            }
+//        try {
+//            encreServ.detect_encre(imprimanteServ.findById(imprimante.getId()));
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "La commande a été éffectué correctement."));
+//
+//        } catch (DataAccessException ex) {
+//            //System.out.println("il ya une erreur");
+//            Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement de la commande."));
+//
+//        }
 
     }
     
     public void savePaper(){
-         System.out.println(imprimante.getId()); 
+        // System.out.println(imprimante.getId()); 
         try {
             papiers = papierServ.findbyImp(imprimante.getId());
         } catch (DataAccessException ex) {
@@ -184,8 +194,11 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
              }
             try {
                 papierServ.create(papier);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "La commande a été éffectué correctement."));
             } catch (DataAccessException ex) {
                 Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement de la commande."));
+
             }
         
     }

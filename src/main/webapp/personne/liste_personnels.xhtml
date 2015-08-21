@@ -21,11 +21,12 @@ and open the template in the editor.
         </div>
         <div id="conten">
             <h:form id="list">
+                    <p:growl id="messages" showDetail="true" autoUpdate="true" /> 
+
                     <p:contextMenu for="agentTable">     
                         <p:menuitem value="Supprimer" onclick="PF('cd').show()" icon="ui-icon-home"  update=":supform" />
                         <p:menuitem value="Modifier" onclick="PF('modifierDialog').show()" icon="ui-icon-pencil"  update=":updatform:display"/> 
                     </p:contextMenu>
-                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                     <p:dataTable  var="personne" id="agentTable" value="#{personneBean.personnes}" selection="#{personneBean.personne}" selectionMode="single" rowKey="#{personne.id}" paginator="true" rows="10">  
 
                         <f:facet name="header">  
@@ -51,12 +52,6 @@ and open the template in the editor.
 
                             <h:outputText value="#{personne.imprimante}" />  
                         </p:column> 
-                        
-                        <p:column headerText="Agence" filterBy="#{personne.service.agence}" sortBy="#{personne.service.agence}">
-
-                            <h:outputText value="#{personne.service.agence}" />  
-                        </p:column> 
-                        
                         <f:facet name="footer">  
                             <p:commandButton value="Ajouter une personne" onclick="PF('ajouter_dialog').show()" icon="ui-icon-disk" update=":list:agentTable" /> 
                         </f:facet> 
@@ -71,13 +66,6 @@ and open the template in the editor.
 
                             <h:outputText value="prenom"/> 
                             <p:inputText  id="udp_pre" value="#{personneBean.personne.prenom}" style=" width:95%;"/> 
-                            
-                            
-                            <h:outputLabel  value="agence"/> 
-                            <p:selectOneMenu id="udp_rol8" value="#{personneBean.nom_agence}"  style=" width:100%;">
-                                <f:selectItems value="#{personneBean.agences}" /> 
-                                <p:ajax update="udp_service"  />
-                            </p:selectOneMenu>
                             
                             <h:outputLabel value="service"/> 
                             <p:selectOneMenu id="udp_service" value="#{personneBean.service_selec}"  style=" width:100%;" >
@@ -119,13 +107,7 @@ and open the template in the editor.
 
                             <h:outputText value="prenom"/> 
                             <p:inputText  id="iden2" value="#{personneBean.personne1.prenom}" style=" width:95%;"/> 
-                            
-                            <h:outputLabel  value="agence"/> 
-                            <p:selectOneMenu id="rol8" value="#{personneBean.nom_agence}"  style=" width:100%;">
-                                <f:selectItems value="#{personneBean.agences}" /> 
-                                <p:ajax update="service"  />
-                            </p:selectOneMenu>
-                            
+                           
                             <h:outputLabel  for="service" value="service"/> 
                             <p:selectOneMenu id="service" value="#{personneBean.service_selec}"  style=" width:100%;">
                                 <f:selectItems value="#{personneBean.services}" />  

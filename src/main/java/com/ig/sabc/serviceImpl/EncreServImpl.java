@@ -121,8 +121,8 @@ public class EncreServImpl implements IEncreServ{
             }
         }
         
-        if(cmpt > i.getCategorie().getNbre_encre())
-            messageServ.messageAlerte_noir(i, cmpt);
+//        if(cmpt > i.getCategorie().getNbre_encre())
+//            messageServ.messageAlerte_noir(i, cmpt);
         //        
         //JE VIENS DE RECUPERER L'ENSEMEBLE DE CONSOMMATION D'ENCRE COULEUR SUR UNE DATE DONNEE
     } 

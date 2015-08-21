@@ -17,9 +17,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.SelectableDataModel;
 
 /**
@@ -42,6 +44,7 @@ public class ServiceBean implements SelectableDataModel<Service>{
     IImprimanteServ imprimanteServ;
     private List<Imprimante> imprimantes = new LinkedList<Imprimante>();
     private List<String> serviceTypes = new LinkedList<String>();
+    
     private ServiceType type;
     private String s;
     private String agence_nom;
@@ -117,12 +120,15 @@ public class ServiceBean implements SelectableDataModel<Service>{
     }
 
     public List<String> getServiceTypes() {
-        serviceTypes.add("REGION");
-        serviceTypes.add("USINE");
+        if (serviceTypes.isEmpty()) {
+            serviceTypes.add("REGION");
+            serviceTypes.add("USINE");
+        }
         return serviceTypes;
     }
 
     public void setServiceTypes(List<String> serviceTypes) {
+        
         this.serviceTypes = serviceTypes;
     }
 
@@ -174,38 +180,45 @@ public class ServiceBean implements SelectableDataModel<Service>{
     
     public void enregistrer(){
         try {
-            Agence a= agenceServ.findByreg(agence_nom);
+            //Agence a= agenceServ.findByreg(agence_nom);
             if(s.compareTo("USINE")==0)
                 service.setServicetype(type.USINE);
             else
                 service.setServicetype(type.REGION);
-            service.setAgence(a);
+            //service.setAgence(a);
             serviceServ.create(service);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "L'enregistrement a été éffectué correctement."));
         } catch (DataAccessException ex) {
             Logger.getLogger(ServiceBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement."));
         }
-        System.out.println(service);
+        //System.out.println(service);
     }
     
     public void modifier(){
         try {
             
-            Agence a= agenceServ.findByreg(agence_nom);
+            //Agence a= agenceServ.findByreg(agence_nom);
             if(s.compareTo("USINE")==0)
                 service.setServicetype(type.USINE);
             else
                 service.setServicetype(type.REGION);
-            service.setAgence(a);
+            //service.setAgence(a);
             serviceServ.update(service);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "L'enregistrement a été éffectué correctement."));
         } catch (DataAccessException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement."));
+            
             Logger.getLogger(ServiceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(service);
+        //System.out.println(service);
     }
     
     public void supprimer(){
         try {
             serviceServ.delete(service.getId());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "La suppression a été éffectué correctement."));
+
         } catch (DataAccessException ex) {
             Logger.getLogger(ServiceBean.class.getName()).log(Level.SEVERE, null, ex);
         }

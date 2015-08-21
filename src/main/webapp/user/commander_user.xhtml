@@ -17,7 +17,7 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <div>
-       <ui:include src="../menu.xhtml" />
+       <ui:include src="../menu_user.xhtml" />
         </div>
         <div id="conten">
             <h:form id="list">
@@ -27,7 +27,7 @@ and open the template in the editor.
                         <p:menuitem value="Commander des formats" onclick="PF('PaperDialog').show()" icon="ui-icon-pencil"  update=":saveform:display"/> 
                          
                     </p:contextMenu>
-                <p:growl id="messages" showDetail="true" autoUpdate="true" />
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                     <p:dataTable  var="imprimante" id="agentTable" value="#{commandeBean.imprimantes}" selection="#{commandeBean.imprimante}" selectionMode="single" rowKey="#{imprimante.id}" paginator="true" rows="10">  
 
                         <f:facet name="header">  

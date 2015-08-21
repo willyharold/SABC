@@ -24,6 +24,10 @@ public class OrientationBean {
         return "connexion";
     }
     
+    public String connexion_user(){
+        return "connexion_user";
+    }
+    
     public String liste_agences(){
         return "liste_agences";
     }
@@ -56,6 +60,11 @@ public class OrientationBean {
      public String consommable(){
         return "consommable";
     }
+     
+     public String consommable_user(){
+        return "consommable_user";
+    }
+     
      public String imprimante(){
         return "imprimant";
     }

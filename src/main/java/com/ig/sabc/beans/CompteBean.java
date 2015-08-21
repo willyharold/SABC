@@ -144,6 +144,8 @@ public class CompteBean implements SelectableDataModel<Compte>{
     public void setCompte(Compte compte) {
         this.compte = compte;
     }
+    
+    
     Compte compte1 =new Compte();
     public String connec(){
         if(compte.getIdentifiant().compareTo("")==0||compte.getMot_passe().compareTo("")==0){
@@ -154,7 +156,10 @@ public class CompteBean implements SelectableDataModel<Compte>{
         try {
             compte1= compteServ.FindByLogin(compte.getIdentifiant());
             if(compte1.getMot_passe().compareTo(compte.getMot_passe())==0)
-                return "connexion";
+                if(compte1.getRole().compareTo(Role.ADMIN)==0)
+                    return "connexion";
+                if(compte1.getRole().compareTo(Role.EMPLOYE)==0)
+                    return "connexion_user";
         } catch (Exception e) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Contactez l'administrateur."));
                 
@@ -177,9 +182,12 @@ public class CompteBean implements SelectableDataModel<Compte>{
                     compte.setPersonne(p);
             }
             compteServ.create(compte);
-            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "L'enregistrement a été éffectué correctement."));
+
         } catch (DataAccessException ex) {
             Logger.getLogger(CompteBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement."));
+
         }
     }
     
@@ -202,9 +210,12 @@ public class CompteBean implements SelectableDataModel<Compte>{
             }
             
             compteServ.update(compte);
-            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "L'enregistrement a été éffectué correctement."));
+  
         } catch (DataAccessException ex) {
             Logger.getLogger(CompteBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement."));
+
         }
     }
 
@@ -219,6 +230,8 @@ public class CompteBean implements SelectableDataModel<Compte>{
             c.setPersonne(compte.getPersonne());
             c.setRole(compte.getRole());
             compteServ.delete(compte.getId());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "La suppression a été éffectué correctement."));
+
         } catch (DataAccessException ex) {
             Logger.getLogger(CompteBean.class.getName()).log(Level.SEVERE, null, ex);
         }

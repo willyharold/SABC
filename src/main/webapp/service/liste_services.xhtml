@@ -21,11 +21,11 @@ and open the template in the editor.
         </div>
         <div id="conten">
             <h:form id="list">
+                    <p:growl id="messages" showDetail="true" autoUpdate="true" /> 
                     <p:contextMenu for="agentTable">     
                         <p:menuitem value="Supprimer" onclick="PF('cd').show()" icon="ui-icon-home"  update=":supform" />
                         <p:menuitem value="Modifier" onclick="PF('modifierDialog').show()" icon="ui-icon-pencil"  update=":updatform:display"/> 
                     </p:contextMenu>
-                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                     <p:dataTable  var="service" id="agentTable" value="#{serviceBean.services}" selection="#{serviceBean.service}" selectionMode="single" rowKey="#{service.id}" paginator="true" rows="10">  
 
                         <f:facet name="header">  
@@ -44,11 +44,6 @@ and open the template in the editor.
                         <p:column headerText="type de service" filterBy="#{service.servicetype}" sortBy="#{service.servicetype}">  
                             <h:outputText value="#{service.servicetype}" />  
                         </p:column>
-                        
-                        <p:column headerText="agence" filterBy="#{service.agence.region}" sortBy="#{service.agence.region}">  
-                            <h:outputText value="#{service.agence.region}" />  
-                        </p:column>
-                      
                         <f:facet name="footer">  
                             <p:commandButton value="Ajouter un service" onclick="PF('ajouter_dialog').show()" icon="ui-icon-disk" update=":list:agentTable" /> 
                         </f:facet> 
@@ -65,10 +60,6 @@ and open the template in the editor.
                             <h:outputText value="type de service"/> 
                             <p:selectOneMenu id="rM" value="#{serviceBean.s}" required="true" style=" width:100%;">
                                 <f:selectItems value="#{serviceBean.serviceTypes}" />  
-                            </p:selectOneMenu>
-                            <h:outputText value="agence"/> 
-                            <p:selectOneMenu id="en5M" value="#{serviceBean.agence_nom}" required="true" style="width:100%">
-                                <f:selectItems value="#{serviceBean.agences}" />  
                             </p:selectOneMenu>
                             
                             <h:inputHidden  id="entree10" value="#{serviceBean.service.id}"/> 
@@ -100,12 +91,6 @@ and open the template in the editor.
                             <p:selectOneMenu id="r" value="#{serviceBean.s}" required="true" style=" width:100%;">
                                 <f:selectItems value="#{serviceBean.serviceTypes}" />  
                             </p:selectOneMenu>
-                            <h:outputText value="agence"/> 
-                            <p:selectOneMenu id="en5" value="#{serviceBean.agence_nom}" required="true" style="width:100%">
-                                <f:selectItems value="#{serviceBean.agences}" />  
-                            </p:selectOneMenu>
-                            
-                            
                             <f:facet name="footer"> <br/>  
                                 <p:commandButton value="Enregistrer" action="#{serviceBean.enregistrer()}"  oncomplete="PF('ajouter_dialog').hide()" icon="ui-icon-disk" update=":list:agentTable" />  
                             </f:facet>

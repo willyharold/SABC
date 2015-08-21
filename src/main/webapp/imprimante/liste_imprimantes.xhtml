@@ -24,9 +24,8 @@ and open the template in the editor.
                     <p:contextMenu for="agentTable">     
                         <p:menuitem value="Supprimer" onclick="PF('cd').show()" icon="ui-icon-home"  update=":supform" />
                         <p:menuitem value="Modifier" onclick="PF('modifierDialog').show()" icon="ui-icon-pencil"  update=":updatform:display"/> 
-                        <p:menuitem value="Historique" onclick="PF('modifierDialog').show()" icon="ui-icon-pencil"  update=":updatform:display"/> 
                     </p:contextMenu>
-                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                <p:growl id="messages" showDetail="true" autoUpdate="true" />
                     <p:dataTable  var="imprimante" id="agentTable" value="#{imprimanteBean.imprimantes}" selection="#{imprimanteBean.imprimante}" selectionMode="single" rowKey="#{imprimante.id}" paginator="true" rows="10">  
 
                         <f:facet name="header">  

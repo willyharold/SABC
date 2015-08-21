@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,8 +34,8 @@ public class Message implements Serializable{
     @Column(nullable = false)
     private String message;
     
-    @Column(nullable = false)
-    private Boolean status;
+    @Enumerated(EnumType.STRING)
+    private Etat status = Etat.NON_LU;
     
     @ManyToOne
     private Compte compte;
@@ -62,11 +64,11 @@ public class Message implements Serializable{
         this.message = message;
     }
 
-    public Boolean getStatus() {
+    public Etat getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Etat status) {
         this.status = status;
     }
 

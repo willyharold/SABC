@@ -18,10 +18,12 @@ import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.SelectableDataModel;
 
 /**
@@ -139,14 +141,10 @@ public class PersonneBean implements SelectableDataModel<Personne>{
     }
 
     public List<Service> getServices() {
-        if (nom_agence != null) {
-            try {
-                Agence agence = new Agence();
-                agence = agenceServ.findByreg(nom_agence);
-                services = serviceServ.findAllbyAgence(agence.getId());
-            } catch (DataAccessException ex) {
-                Logger.getLogger(PersonneBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            services = serviceServ.findAll();
+        } catch (DataAccessException ex) {
+            Logger.getLogger(PersonneBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return services;
     }
@@ -209,8 +207,12 @@ public class PersonneBean implements SelectableDataModel<Personne>{
         }
         try {
             personneServ.create(personne1);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "L'enregistrement a été éffectué correctement."));
+
         } catch (DataAccessException ex) {
             Logger.getLogger(PersonneBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement."));
+
         }        
     }
     
@@ -233,14 +235,19 @@ public class PersonneBean implements SelectableDataModel<Personne>{
         }
         try {
             personneServ.update(personne);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "L'enregistrement a été éffectué correctement."));
+
         } catch (DataAccessException ex) {
             Logger.getLogger(PersonneBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement."));
+
         }        
     }
       
       public void supprimer(){
         try {
             personneServ.delete(personne.getId());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "La suppression a été éffectué correctement."));
         } catch (DataAccessException ex) {
             Logger.getLogger(PersonneBean.class.getName()).log(Level.SEVERE, null, ex);
         }

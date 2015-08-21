@@ -6,6 +6,7 @@ package com.ig.sabc.serviceImpl;
 
 import com.douwe.generic.dao.DataAccessException;
 import com.ig.sabc.dao.IMessageDao;
+import com.ig.sabc.entities.Etat;
 import com.ig.sabc.entities.Imprimante;
 import com.ig.sabc.entities.Message;
 import com.ig.sabc.service.IMessageServ;
@@ -56,11 +57,11 @@ public class MessageServImpl implements IMessageServ{
     }
     
     public void messageAlerte_noir(Imprimante i, int conso) throws DataAccessException {
-        String mes = "L'imprimante " + i.getIdentifiant() + " appartenant à .... a une consommation élévé par rapport a sa consommation abituelle. Sa consommation abituelle est de" + i.getCategorie().getNbre_encre() + " par mois. Il est déja consommé " + conso;
+        String mes = "L'imprimante " + i.getIdentifiant() + " appartenant à .... a une consommation élévé par rapport à sa consommation abituelle. Sa consommation abituelle est de" + i.getCategorie().getNbre_encre() + " par mois. Il est déja consommé " + conso;
         Message msg = new Message();
         msg.setMessage(mes);
         msg.setDate_debut(Calendar.getInstance());
-        msg.setStatus(Boolean.FALSE); 
+        msg.setStatus(Etat.NON_LU); 
         message.create(msg);
     }
 }
