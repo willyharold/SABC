@@ -22,7 +22,7 @@ and open the template in the editor.
         <div id="conten">
             <h:form id="list">
                     <p:contextMenu for="agentTable">
-                        <p:menuitem value="lire" onclick="PF('detail_message').show()" icon="ui-icon-pencil"  update=":saveform:display"/>
+                        <p:menuitem value="lire" onclick="PF('detail_message').show()" icon="ui-icon-pencil"  update=":saveform:display" action="#{messagerieBean.modifier()}"/>
                         <p:menuitem value="Supprimer" onclick="PF('cd').show()" icon="ui-icon-home"  update=":supform" />
                          
                     </p:contextMenu>
@@ -51,7 +51,7 @@ and open the template in the editor.
                     </p:dataTable> 
                 </h:form>
             
-            <p:dialog id="save" header="message" widgetVar="detail_message" resizable="false" width="500" showEffect="clip" height="300"> 
+            <p:dialog id="save" header="message" widgetVar="detail_message" resizable="false" width="500" showEffect="clip" height="200" closable="false" > 
                    <h:form id ="saveform">
                         <h:panelGrid id="display" columns="2" >   
                             <h:outputText value="date: "/>
@@ -61,17 +61,21 @@ and open the template in the editor.
                             <h:outputText value="message: "/>
                             <h:outputText value="#{messagerieBean.message.message}" /> 
                           <h:inputHidden  id="id_message" value="#{messagerieBean.message.id}"/>  
-                        </h:panelGrid> 
-                    </h:form>
+                          <f:facet name="footer" >
+                       <p:commandButton value="Fermer" onclick="PF('detail_message').hide()" icon="ui-icon-close" update=":list:agentTable"/>  
+                          </f:facet>
+                        </h:panelGrid>
+                       
+                   </h:form>
                </p:dialog>
             
             <p:confirmDialog  id="confirm" message="voulez vous vraiment supprimer?" showEffect="fade" widgetVar="cd" severity="alert">
                     <h:form id="supform">
                         
                      <h:inputHidden  id="entree11" value="#{messagerieBean.message.id}"/>
-                        <p:commandButton value="Yes" oncomplete="PF('cd').hide()" action="#{messagerieBean.supprimer()}" icon="ui-icon-check" update=":list:agentTable"/>  
+                        <p:commandButton value="Oui" oncomplete="PF('cd').hide()" action="#{messagerieBean.supprimer()}" icon="ui-icon-check" update=":list:agentTable"/>  
                        
-                        <p:commandButton value="No" onclick="PF('cd').hide()" icon="ui-icon-close" />  
+                        <p:commandButton value="Non" onclick="PF('cd').hide()" icon="ui-icon-close" />  
                     </h:form>
             </p:confirmDialog>
             

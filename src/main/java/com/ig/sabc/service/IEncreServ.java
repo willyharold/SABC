@@ -33,5 +33,5 @@ public interface IEncreServ{
     
     public Encre update(Encre t) throws DataAccessException; 
     
-    public void detect_encre(Imprimante i) throws DataAccessException;
+    public int detect_encre(Imprimante i) throws DataAccessException;
 }

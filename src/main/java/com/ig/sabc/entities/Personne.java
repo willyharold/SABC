@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 /**
@@ -18,6 +20,10 @@ import javax.persistence.OneToOne;
  * @author root
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "personne.no_compte",query = " SELECT p from Personne p, Compte c WHERE p.id!= c.personne"),
+})
+
 public class Personne implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

@@ -6,11 +6,9 @@
 package com.ig.sabc.beans;
 
 import com.douwe.generic.dao.DataAccessException;
-import com.ig.sabc.entities.Imprimante;
+import com.ig.sabc.entities.Etat;
 import com.ig.sabc.entities.Message;
 import com.ig.sabc.service.IMessageServ;
-import com.ig.sabc.service.IServiceServ;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +17,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.model.SelectableDataModel;
 
@@ -81,6 +78,17 @@ public class MessagerieBean implements SelectableDataModel<Message>{
         this.messages = messages;
     }
     
+    public void modifier(){
+        message.setStatus(Etat.LU);
+        try {
+            messageServ.update(message);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(MessagerieBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+            
+            
+            
     public Object getRowKey(Message t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

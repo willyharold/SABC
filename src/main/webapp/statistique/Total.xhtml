@@ -20,14 +20,16 @@ and open the template in the editor.
        <ui:include src="../menu.xhtml" />
         </div>
         <div id="conten_stat">
-            <h:form id="list">
-                
-                <p:chart type="line" model="#{statistiqueBean.dataModel}" style ="height: 500px;"/>    
-                
-            </h:form>
             
+            <h:form id="list">
+                <p:panel id="basic" header="Statistique Totale" style="margin-bottom:20px">
+                    <p:chart type="line" model="#{statistiqueBean.dataModel1}" style ="height: 500px;"/>                  
+                </p:panel> 
+
+            </h:form>
+
         </div>
-    
+
     </h:body>
 
 </html>

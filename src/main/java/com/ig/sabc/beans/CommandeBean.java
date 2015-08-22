@@ -142,6 +142,7 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
     
     public void saveInk(){
         //System.out.println(imprimante.getId());
+        int cmpt=0;
         try {
             encres = encreServ.findbyImp(imprimante.getId());
         } catch (DataAccessException ex) {
@@ -164,16 +165,20 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement de la commande."));
 
             }
-//        try {
-//            encreServ.detect_encre(imprimanteServ.findById(imprimante.getId()));
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "La commande a été éffectué correctement."));
-//
-//        } catch (DataAccessException ex) {
-//            //System.out.println("il ya une erreur");
-//            Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement de la commande."));
-//
-//        }
+        try {
+            cmpt=encreServ.detect_encre(imprimanteServ.findById(imprimante.getId()));
+        } catch (DataAccessException ex) {
+            //System.out.println("il ya une erreur");
+            Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "Erreur lors de l'enregistrement de la commande."));
+
+        }
+        if(cmpt>0)
+            try {
+                messageServ.messageAlerte_noir(imprimanteServ.findById(imprimante.getId()), cmpt);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
     

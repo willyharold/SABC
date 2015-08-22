@@ -19,6 +19,8 @@ public interface IPersonneServ{
 
     public List<Personne> findAll() throws DataAccessException;
 
+    public List<Personne> findbycompt() throws DataAccessException;
+
     public Personne create(Personne t) throws DataAccessException;
 
     public void delete(Personne t) throws DataAccessException;

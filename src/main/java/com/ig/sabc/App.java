@@ -6,10 +6,12 @@ import com.ig.sabc.entities.Encre;
 import com.ig.sabc.entities.EncreType;
 import com.ig.sabc.entities.Etat;
 import com.ig.sabc.entities.Message;
+import com.ig.sabc.entities.Personne;
 import com.ig.sabc.entities.Service;
 import com.ig.sabc.service.IAgenceServ;
 import com.ig.sabc.service.IEncreServ;
 import com.ig.sabc.service.IMessageServ;
+import com.ig.sabc.service.IPersonneServ;
 import com.ig.sabc.service.IServiceServ;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,6 +60,13 @@ public class App
         message.setMessage("bonjour root, ceci est un message a cause du premier deployement de notre application, bien vouloir le supprimer");
         message.setStatus(Etat.NON_LU);
         messageServ.create(message);
+        
+        IPersonneServ personneServ =(IPersonneServ)ctx.getBean("IPersonneServ");
+        List<Personne> personne = new LinkedList<Personne>();
+        personne = personneServ.findbycompt();
+        for (Personne personne1 : personne) {
+            System.out.println(personne);
+        }
 //        
 //        IAgenceServ agenceServ = ( )ctx.getBean("IAgenceServ");
 //        

@@ -19,8 +19,20 @@ and open the template in the editor.
         <div>
        <ui:include src="../menu.xhtml" />
         </div>
-        <div id="conten_stat">
+        <div id="conten_stat_an">
             <h:form id="list">
+                <p:panel id="basic" header="Statistique Mensuelle" style="margin-bottom:20px">
+                    <h:panelGrid columns="5" cellpadding ="10">
+                        <p:outputLabel value="Mois de départ"/>
+                        <p:inputText value="#{statistiqueBean.année}" required="true"/>
+                        <p:outputLabel value="Mois de fin"/>
+                        <p:inputText value="#{statistiqueBean.année}" required="true"/>
+                        <p:commandButton value="Envoyer" action="#{statistiqueBean.createLineModels()}" update=":stat"  />  
+                    </h:panelGrid>  
+                </p:panel>
+            </h:form>
+            
+            <h:form id="stat">
                 
                 <p:chart type="line" model="#{statistiqueBean.dataModel}" style ="height: 500px;"/>    
                 

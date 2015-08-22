@@ -54,5 +54,9 @@ public class PersonneServImpl implements IPersonneServ{
 
     personne.delete(personne.findById(t));
     }
+
+    public List<Personne> findbycompt() throws DataAccessException {
+        return personne.findbycompte();
+    }
     
 }

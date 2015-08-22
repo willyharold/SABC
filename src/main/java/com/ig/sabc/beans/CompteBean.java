@@ -59,8 +59,10 @@ public class CompteBean implements SelectableDataModel<Compte>{
     }
     
     public List<String> initialise_role(){
+        if(roles.isEmpty()){
         roles.add("ADMIN");
         roles.add("EMPLOYE");
+        }
         return roles;     
     }
 
@@ -98,7 +100,7 @@ public class CompteBean implements SelectableDataModel<Compte>{
     
     public List<Personne> getPersonnes() {
         try {
-            personnes = personneServ.findAll();
+            personnes = personneServ.findbycompt();
         } catch (DataAccessException ex) {
             Logger.getLogger(CompteBean.class.getName()).log(Level.SEVERE, null, ex);
         }

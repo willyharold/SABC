@@ -7,7 +7,9 @@ package com.ig.sabc.beans;
 
 import com.douwe.generic.dao.DataAccessException;
 import com.ig.sabc.entities.Encre;
+import com.ig.sabc.entities.Papier;
 import com.ig.sabc.service.IEncreServ;
+import com.ig.sabc.service.IPapierServ;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +38,7 @@ import org.primefaces.model.chart.LineChartSeries;
 public class StatistiqueBean implements Serializable{
     
     private LineChartModel dataModel;
+    private LineChartModel dataModel1;
     private String année;
     
     @ManagedProperty(value = "#{IEncreServ}")
@@ -43,6 +46,12 @@ public class StatistiqueBean implements Serializable{
     Encre encre = new Encre();
     private String type_encre;
     private List<Encre> encres = new LinkedList<Encre>();
+    
+    @ManagedProperty(value = "#{IPapierServ}")
+    IPapierServ papierServ;
+    Papier papier = new Papier();
+    private List<Papier> papiers = new LinkedList<Papier>();        
+    
     String année2 = new String();
     static String anneefinal = new String("hello");
     static String anneefinal2 = new String();
@@ -51,6 +60,40 @@ public class StatistiqueBean implements Serializable{
         return année;
     }
 
+    public LineChartModel getDataModel1() {
+        return dataModel1;
+    }
+
+    public void setDataModel1(LineChartModel dataModel1) {
+        this.dataModel1 = dataModel1;
+    }
+
+    public IPapierServ getPapierServ() {
+        return papierServ;
+    }
+
+    public void setPapierServ(IPapierServ papierServ) {
+        this.papierServ = papierServ;
+    }
+
+    public Papier getPapier() {
+        return papier;
+    }
+
+    public void setPapier(Papier papier) {
+        this.papier = papier;
+    }
+
+    public List<Papier> getPapiers() {
+        return papiers;
+    }
+
+    public void setPapiers(List<Papier> papiers) {
+        this.papiers = papiers;
+    }
+
+    
+    
     public void setAnnée(String année) {
         this.année = année;
     }
@@ -70,6 +113,7 @@ public class StatistiqueBean implements Serializable{
     @PostConstruct
         public void init()   {
             createLineModels();
+            createLineModels1();
         }
 
     public LineChartModel getDataModel() {
@@ -132,7 +176,7 @@ public class StatistiqueBean implements Serializable{
         année = année + "-01"+"-01";
         année2 = année2+ "-12" + "-31";
 //quand je ne mets pas année dans cette methode, annéée est constament null! pourquoi??
-        System.out.println(année);
+        //System.out.println(année);
         if(!(année==null)){
             
         try {
@@ -181,4 +225,46 @@ public class StatistiqueBean implements Serializable{
         }
     }
     
+    public void createLineModels1() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            encres = encreServ.findAll();
+        } catch (DataAccessException ex) {
+            Logger.getLogger(StatistiqueBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            papiers = papierServ.findAll();
+        } catch (DataAccessException ex) {
+            Logger.getLogger(StatistiqueBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        dataModel1 = new LineChartModel();
+        LineChartSeries series1 = new LineChartSeries();
+        series1.setLabel("Consommation en encre");
+        
+        for (Encre encre1 : encres) {
+            series1.set(dateFormat.format(encre1.getDate_debut().getTime()),encre1.getNbr_encre());
+        }
+        
+        LineChartSeries series2 = new LineChartSeries();
+        series2.setLabel("Consommation en rame de papier");
+        
+        for (Papier p: papiers) {
+            series2.set(dateFormat.format(p.getDate_debut().getTime()),p.getNbr_papier());
+        }
+        
+        dataModel1.addSeries(series1);
+        dataModel1.addSeries(series2);
+        dataModel1.setTitle("Zoomer pour plus de détails");
+        dataModel1.setZoom(true);
+        dataModel1.getAxis(AxisType.Y).setLabel("Valeur");
+        DateAxis axis = new DateAxis("Dates");
+        axis.setTickAngle(-50);
+        axis.setMax("2015-12-31");
+        axis.setTickFormat("%b %#d, %y");
+        
+        dataModel1.getAxes().put(AxisType.X, axis);  
+        dataModel1.setAnimate(true);
+        dataModel1.setLegendPosition("se");
+    }
 }
