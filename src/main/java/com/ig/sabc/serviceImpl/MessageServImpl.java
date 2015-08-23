@@ -57,7 +57,23 @@ public class MessageServImpl implements IMessageServ{
     }
     
     public void messageAlerte_noir(Imprimante i, int conso) throws DataAccessException {
-        String mes = "L'imprimante " + i.getIdentifiant() + " appartenant à .... a une consommation élévé par rapport à sa consommation abituelle. Sa consommation abituelle est de " + i.getCategorie().getNbre_encre() + " par mois. Il a déja consommé " + conso;
+        String mes = "L'imprimante " + i.getIdentifiant() + " a une consommation élévé en boîte d'encre noir. Sa consommation abituelle est de " + i.getCategorie().getNbre_encre() + " par mois. Il a déja consommé " + conso + " ce mois-ci!";
+        Message msg = new Message();
+        msg.setMessage(mes);
+        msg.setDate_debut(Calendar.getInstance());
+        msg.setStatus(Etat.NON_LU); 
+        message.create(msg);
+    }
+    public void messageAlerte_couleur(Imprimante i, int conso) throws DataAccessException {
+        String mes = "L'imprimante " + i.getIdentifiant() + " a une consommation élévé en boîte d'encre couleur. Sa consommation abituelle est de " + i.getCategorie().getNbre_encre_c()+ " par mois. Il a déja consommé " + conso + " boîtes d'encres ce mois-ci!";
+        Message msg = new Message();
+        msg.setMessage(mes);
+        msg.setDate_debut(Calendar.getInstance());
+        msg.setStatus(Etat.NON_LU); 
+        message.create(msg);
+    }
+    public void messageAlerte_papier(Imprimante i, int conso) throws DataAccessException {
+        String mes = "L'imprimante " + i.getIdentifiant() + " a une consommation élévé en rame de papier. Sa consommation abituelle est de " + i.getCategorie().getNbre_format()+ " rames par mois. Il a déja consommé " + conso + " rames ce mois-ci!";
         Message msg = new Message();
         msg.setMessage(mes);
         msg.setDate_debut(Calendar.getInstance());

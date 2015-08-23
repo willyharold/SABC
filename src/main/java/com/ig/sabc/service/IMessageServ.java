@@ -29,4 +29,8 @@ public interface IMessageServ{
     public Message update(Message t) throws DataAccessException;
     
     public void messageAlerte_noir(Imprimante i, int conso) throws DataAccessException;
+    
+    public void messageAlerte_couleur(Imprimante i, int conso) throws DataAccessException;
+    
+    public void messageAlerte_papier(Imprimante i, int conso) throws DataAccessException;
 }

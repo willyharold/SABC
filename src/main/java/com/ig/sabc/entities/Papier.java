@@ -23,6 +23,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries({@NamedQuery(name = "papier.Byimprimante",query = " SELECT p from Imprimante i, Papier p WHERE i.id = p.imprimante AND p.id = :param"),
+@NamedQuery(name = "papier.Bytype",query = " SELECT p from Papier p WHERE p.date_debut BETWEEN :param1 AND :param2 "),
+
 })
 public class Papier implements Serializable{
     

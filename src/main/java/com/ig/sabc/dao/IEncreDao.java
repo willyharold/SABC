@@ -23,5 +23,8 @@ public interface IEncreDao extends IDao<Encre, Long>{
     
     public List<Encre> encrebytype(Date date1,Date date2, Enum type ) throws DataAccessException;
     
-    public int detect(Imprimante i) throws DataAccessException;
+    public int detect_encre_noir(Imprimante i) throws DataAccessException;
+    
+    public int detect_encre_couleur(Imprimante i) throws DataAccessException;
 }
+

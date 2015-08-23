@@ -7,8 +7,10 @@ package com.ig.sabc.serviceImpl;
 import com.douwe.generic.dao.DataAccessException;
 import com.ig.sabc.dao.IPapierDao;
 import com.ig.sabc.daoImpl.PapierDaoImpl;
+import com.ig.sabc.entities.Imprimante;
 import com.ig.sabc.entities.Papier;
 import com.ig.sabc.service.IPapierServ;
+import java.util.Date;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +54,14 @@ public class PapierServImpl implements IPapierServ{
 
     public List<Papier> findbyImp(Long id) throws DataAccessException {
         return papier.papierbyimp(id);
+    }
+
+    public List<Papier> papierby_date(Date date1, Date date2) throws DataAccessException {
+        return papier.papierbydat(date1, date2);
+    }
+
+    public int detect_papier(Imprimante i) throws DataAccessException {
+        return papier.detect_papier(i);
     }
     
 }

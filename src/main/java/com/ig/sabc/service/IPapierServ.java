@@ -6,7 +6,9 @@ package com.ig.sabc.service;
 
 import com.douwe.generic.dao.DataAccessException;
 import com.ig.sabc.dao.IPapierDao;
+import com.ig.sabc.entities.Imprimante;
 import com.ig.sabc.entities.Papier;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,5 +28,11 @@ public interface IPapierServ{
     public void delete(Papier t) throws DataAccessException;
     
     public Papier update(Papier t) throws DataAccessException;
+    
+    public List<Papier> papierby_date(Date date1,Date date2) throws DataAccessException;
+    
+    public int detect_papier(Imprimante i) throws DataAccessException;
+
+
     
 }

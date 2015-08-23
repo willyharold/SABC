@@ -43,7 +43,7 @@ public class EncreDaoImpl extends GenericDao<Encre, Long> implements IEncreDao{
     
     
     
-    public int detect(Imprimante i) throws DataAccessException{
+    public int detect_encre_noir(Imprimante i) throws DataAccessException{
         Calendar calendar = Calendar.getInstance();
         String d1 = null;
         String d2 = null;
@@ -56,8 +56,7 @@ public class EncreDaoImpl extends GenericDao<Encre, Long> implements IEncreDao{
         System.out.println(d2);
         Date date1 = null;
         Date date2 = null;
-       
-        
+               
         try {
             date1 = dateFormat2.parse(d1);
             date2 = dateFormat2.parse(d2);
@@ -75,9 +74,35 @@ public class EncreDaoImpl extends GenericDao<Encre, Long> implements IEncreDao{
                 cmpt = cmpt + e.getNbr_encre();
             }
         }
-        System.out.println("le nombre d'encre noir est " + cmpt);
-        //JE VIENS DE RECUPERER L'ENSEMEBLE DE CONSOMMATION D'ENCRE NOIR SUR UNE DATE DONNEE
-        //
+  
+        if(cmpt > i.getCategorie().getNbre_encre()){
+            return cmpt;
+        }
+        else
+            return 0;
+        
+    } 
+    
+    public int detect_encre_couleur(Imprimante i) throws DataAccessException {
+        Calendar calendar = Calendar.getInstance();
+        String d1 = null;
+        String d2 = null;
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM");
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy");
+        d1 = dateFormat1.format(calendar.getTime()) + "-" + dateFormat.format(calendar.getTime()) + "-01";
+        d2 = dateFormat1.format(calendar.getTime()) + "-" + dateFormat.format(calendar.getTime()) + "-30";
+        System.out.println(d1);
+        System.out.println(d2);
+        Date date1 = null;
+        Date date2 = null;
+
+        try {
+            date1 = dateFormat2.parse(d1);
+            date2 = dateFormat2.parse(d2);
+        } catch (ParseException ex) {
+            Logger.getLogger(EncreDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         List<Encre> es2 = new LinkedList<Encre>();
         es2 = encrebytype(date1, date2, EncreType.COULEUR);
         int cmpt2 = 0;
@@ -86,12 +111,10 @@ public class EncreDaoImpl extends GenericDao<Encre, Long> implements IEncreDao{
                 cmpt2 = cmpt2 + es21.getNbr_encre();
             }
         }
-        Message msg= new Message();
-        if(cmpt > i.getCategorie().getNbre_encre()){
-            return cmpt;
-        }
-        else
+        if (cmpt2 > i.getCategorie().getNbre_encre_c()) {
+            return cmpt2;
+        } else {
             return 0;
-        
-    } 
+        }
+    }
 }

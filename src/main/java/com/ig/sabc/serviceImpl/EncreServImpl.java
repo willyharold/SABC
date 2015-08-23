@@ -64,7 +64,11 @@ public class EncreServImpl implements IEncreServ{
         return encre.encrebytype(d1, d2, type);
     }  
 
-    public int detect_encre(Imprimante i) throws DataAccessException {
-        return encre.detect(i);
+    public int detect_encre_N(Imprimante i) throws DataAccessException {
+        return encre.detect_encre_noir(i);
+    }
+    
+    public int detect_encre_C(Imprimante i) throws DataAccessException {
+        return encre.detect_encre_couleur(i);
     }
 }
