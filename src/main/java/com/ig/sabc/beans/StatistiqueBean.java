@@ -39,6 +39,7 @@ public class StatistiqueBean implements Serializable{
     
     private LineChartModel dataModel;
     private LineChartModel dataModel1;
+    
     private String année;
     
     @ManagedProperty(value = "#{IEncreServ}")
@@ -164,6 +165,7 @@ public class StatistiqueBean implements Serializable{
        // createLineModels();
         
     }
+    
     public void createLineModels() {
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -188,16 +190,26 @@ public class StatistiqueBean implements Serializable{
         
         try {
             encres = encreServ.findbydate(d1, d2);
+            papiers = papierServ.findAll();
         } catch (DataAccessException ex) {
             Logger.getLogger(StatistiqueBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         dataModel = new LineChartModel();
         LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("serie 1");
+        series1.setLabel("Consommation en encre");
         for (Encre encre1 : encres) {
             series1.set(dateFormat.format(encre1.getDate_debut().getTime()),encre1.getNbr_encre());
         }
+        
+        LineChartSeries series2 = new LineChartSeries();
+        series2.setLabel("Consommation en rame de papier");
+        
+        for (Papier p: papiers) {
+            series2.set(dateFormat.format(p.getDate_debut().getTime()),p.getNbr_papier());
+        }
+        
         dataModel.addSeries(series1);
+        dataModel.addSeries(series2);
         dataModel.setTitle("Zoomer pour plus de détails");
         dataModel.setZoom(true);
         dataModel.getAxis(AxisType.Y).setLabel("Valeur");
@@ -207,6 +219,8 @@ public class StatistiqueBean implements Serializable{
         axis.setTickFormat("%b %#d, %y");
         
         dataModel.getAxes().put(AxisType.X, axis);
+        dataModel.setAnimate(true);
+        dataModel.setLegendPosition("se");
     }
         else{
             dataModel = new LineChartModel();
@@ -221,6 +235,8 @@ public class StatistiqueBean implements Serializable{
             axis.setTickFormat("%b %#d, %y");
 
             dataModel.getAxes().put(AxisType.X, axis);
+            dataModel1.setAnimate(true);
+            dataModel1.setLegendPosition("se");
 
         }
     }

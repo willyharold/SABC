@@ -24,18 +24,13 @@ and open the template in the editor.
                 <p:panel id="basic" header="Statistique annuelle" style="margin-bottom:20px">
                     <h:panelGrid columns="3" cellpadding ="10">
                         <p:outputLabel value="Année"/>
-                        <p:inputText value="#{statistiqueBean.année}" required="true"/>
-                        <p:commandButton value="Envoyer" action="#{statistiqueBean.createLineModels()}" update=":stat"  />  
+                        <p:inputText value="#{statistiqueAnneeBean.année}" required="true"/>
+                        <p:commandButton value="Envoyer" update="stat"  />  
                     </h:panelGrid>  
                 </p:panel>
-            </h:form> 
-            
-            <h:form id="stat">
+                <p:chart type="line" model="#{statistiqueAnneeBean.dataModel}" style ="height: 500px;" id="stat"/>  
          
-                  <p:chart type="line" model="#{statistiqueBean.dataModel}" style ="height: 500px;"/>  
-                    
-            </h:form>                
-            
+                </h:form>
             
         </div>
     
