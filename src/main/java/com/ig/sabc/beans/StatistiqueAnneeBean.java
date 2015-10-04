@@ -12,6 +12,7 @@ import com.ig.sabc.service.IEncreServ;
 import com.ig.sabc.service.IPapierServ;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -43,7 +44,7 @@ public class StatistiqueAnneeBean implements Serializable{
     Papier papier = new Papier();
     private List<Papier> papiers = new LinkedList<Papier>();        
     
-    private String année = new String();
+    private String annee = new String();
 
     private LineChartModel dataModel;
     
@@ -55,12 +56,12 @@ public class StatistiqueAnneeBean implements Serializable{
         this.dataModel = dataModel;
     }
 
-    public String getAnnée() {
-        return année;
+    public String getAnnee() {
+        return annee;
     }
 
-    public void setAnnée(String année) {
-        this.année = année;
+    public void setAnnee(String annee) {
+        this.annee = annee;
     }
 
     public IEncreServ getEncreServ() {
@@ -88,12 +89,13 @@ public class StatistiqueAnneeBean implements Serializable{
     }
 
     public List<Encre> getEncres(){
-//       try {
-//            encres = encreServ.findAll();
-//        } catch (DataAccessException ex) {
-//            Logger.getLogger(EncreBean.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        return encres;
+       try {
+            encres = encreServ.findAll();
+            return encres;
+        } catch (DataAccessException ex) {
+            Logger.getLogger(EncreBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
     }
 
     public void setEncres(List<Encre> encres) {
@@ -117,12 +119,13 @@ public class StatistiqueAnneeBean implements Serializable{
     }
 
     public List<Papier> getPapiers() throws DataAccessException {
-//        try {
-//            papiers = papierServ.findAll();
-//        } catch (DataAccessException ex) {
-//            Logger.getLogger(PapierBean.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        return papiers;
+        try {
+            papiers = papierServ.findAll();
+            return papiers;
+        } catch (DataAccessException ex) {
+            Logger.getLogger(PapierBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
     }
 
     public void setPapiers(List<Papier> papiers) {
@@ -130,7 +133,7 @@ public class StatistiqueAnneeBean implements Serializable{
     }
  
     public StatistiqueAnneeBean() throws DataAccessException{      
-        
+        //this.getEncres();
         dataModel = initLinearModel();
         dataModel.setTitle("Zoomer pour plus de détails");
         dataModel.setZoom(true);
@@ -153,7 +156,7 @@ public class StatistiqueAnneeBean implements Serializable{
         LineChartSeries series1 = new LineChartSeries();
         series1.setLabel("Consommation en encre");
         
-        for (Encre encre1 : getEncres()) {
+        for (Encre encre1 : encres) {
             series1.set(dateFormat.format(encre1.getDate_debut().getTime()),encre1.getNbr_encre());
         }
 
@@ -161,7 +164,7 @@ public class StatistiqueAnneeBean implements Serializable{
         LineChartSeries series2 = new LineChartSeries();
         series2.setLabel("Consommation en rame de papier");
         
-        for (Papier p: getPapiers()) {
+        for (Papier p: papiers) {
             series2.set(dateFormat.format(p.getDate_debut().getTime()),p.getNbr_papier());
         }
  
