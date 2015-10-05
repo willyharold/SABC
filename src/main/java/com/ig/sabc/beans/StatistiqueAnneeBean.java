@@ -11,8 +11,10 @@ import com.ig.sabc.entities.Papier;
 import com.ig.sabc.service.IEncreServ;
 import com.ig.sabc.service.IPapierServ;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -148,13 +150,61 @@ public class StatistiqueAnneeBean implements Serializable{
         dataModel.setLegendPosition("se");    
     }
     
-    private LineChartModel initLinearModel() throws DataAccessException {
+    public void select(){
+        System.out.println("=================================Salut");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        
+        String annee2 = new String();
+        annee2 = annee+"-12-31";
+        annee = annee+"-01-01";
+       
+        Date date1 =new Date();
+        Date date2 =new Date();
+        try {
+            date1 = dateFormat.parse(annee);
+            date2 = dateFormat.parse(annee2);
+                      
+        } catch (ParseException ex) {
+            Logger.getLogger(StatistiqueAnneeBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            encres = encreServ.findbydate(date1,date2);
+            for (Encre encre1 : encres) {
+                System.out.println(encre1);
+            }
+        } catch (DataAccessException ex) {
+            Logger.getLogger(StatistiqueAnneeBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        chargerdonnee();
+    }
+    
+    public void chargerdonnee(){
+        
+        dataModel = initLinearModel();       
+        dataModel.setTitle("Zoomer pour plus de détails");
+        dataModel.setZoom(true);
+        dataModel.getAxis(AxisType.Y).setLabel("Valeur");
+        
+        DateAxis axis = new DateAxis("Dates");
+        axis.setTickAngle(-50);
+        axis.setMax("2015-12-31");
+        axis.setTickFormat("%b %#d, %y");
+        
+        dataModel.getAxes().put(AxisType.X, axis);  
+        dataModel.setAnimate(true);
+        dataModel.setLegendPosition("se");    
+    }
+    
+    private LineChartModel initLinearModel(){
         LineChartModel model = new LineChartModel();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         
 
         LineChartSeries series1 = new LineChartSeries();
         series1.setLabel("Consommation en encre");
+
         
         for (Encre encre1 : encres) {
             series1.set(dateFormat.format(encre1.getDate_debut().getTime()),encre1.getNbr_encre());

@@ -25,10 +25,13 @@ and open the template in the editor.
                     <h:panelGrid columns="3" cellpadding ="10">
                         <p:outputLabel value="Année"/>
                         <p:inputText value="#{statistiqueAnneeBean.annee}" required="true"/>
-                        <p:commandButton value="Envoyer" update="stat"  />  
+                        <p:commandButton value="Envoyer" update="@all" action="#{statistiqueAnneeBean.select()}" />  
                     </h:panelGrid>  
                 </p:panel>
-                <p:chart type="line" model="#{statistiqueAnneeBean.dataModel}" style ="height: 500px;" id="stat"/>  
+            </h:form>
+            <h:form id="stat">
+                
+                <p:chart type="line" model="#{statistiqueAnneeBean.dataModel}" style ="height: 500px;" />  
          
                 </h:form>
             

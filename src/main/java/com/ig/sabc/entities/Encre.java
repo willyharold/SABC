@@ -98,6 +98,11 @@ public class Encre implements Serializable{
     public void setEncreType(EncreType encreType) {
         this.encreType = encreType;
     }
+
+    @Override
+    public String toString() {
+        return "Encre{" + "id=" + id + ", date_debut=" + date_debut + ", date_fin=" + date_fin + ", nbr_encre=" + nbr_encre + ", imprimante=" + imprimante + ", encreType=" + encreType + '}';
+    }
     
     
     
