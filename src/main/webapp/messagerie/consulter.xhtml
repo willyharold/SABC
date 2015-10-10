@@ -51,7 +51,7 @@ and open the template in the editor.
                     </p:dataTable> 
                 </h:form>
             
-            <p:dialog id="save" header="message" widgetVar="detail_message" resizable="false" width="500" showEffect="clip" height="160" closable="false" > 
+            <p:dialog id="save" header="message" widgetVar="detail_message" resizable="false" width="500" showEffect="explode" hideEffect="clip" height="160" closable="false" > 
                    <h:form id ="saveform">
                         <h:panelGrid id="display" columns="2" >   
                             <h:outputText value="date: "/>
@@ -69,7 +69,7 @@ and open the template in the editor.
                    </h:form>
                </p:dialog>
             
-            <p:confirmDialog  id="confirm" message="voulez vous vraiment supprimer?" showEffect="fade" widgetVar="cd" severity="alert">
+            <p:confirmDialog  id="confirm" message="voulez vous vraiment supprimer?" showEffect="explode" hideEffect="puff" widgetVar="cd" severity="alert">
                     <h:form id="supform">
                         
                      <h:inputHidden  id="entree11" value="#{messagerieBean.message.id}"/>

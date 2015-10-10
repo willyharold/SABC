@@ -88,4 +88,11 @@ public class OrientationBean {
          return "annuelle";
      }
      
+     public String accueil(){
+         return "accueil";
+     }
+     
+     public String accueil_user(){
+         return "accueil_user";
+     }
 }

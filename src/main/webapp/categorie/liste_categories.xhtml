@@ -25,7 +25,7 @@ and open the template in the editor.
                         <p:menuitem value="Supprimer" onclick="PF('cd').show()" icon="ui-icon-home"  update=":supform" />
                         <p:menuitem value="Modifier" onclick="PF('modifierDialog').show()" icon="ui-icon-pencil"  update=":updatform:display"/> 
                     </p:contextMenu>
-                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:growl id="messages" showDetail="true" autoUpdate="true"/>
                     <p:dataTable  var="categorie" id="agentTable" value="#{categorieBean.categories}" selection="#{categorieBean.categorie}" selectionMode="single" rowKey="#{categorie.id}" paginator="true" rows="10">  
 
                         <f:facet name="header">  

@@ -19,9 +19,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
@@ -151,10 +153,9 @@ public class StatistiqueAnneeBean implements Serializable{
     }
     
     public void select(){
-        System.out.println("=================================Salut");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        
         String annee2 = new String();
+        
         annee2 = annee+"-12-31";
         annee = annee+"-01-01";
        
@@ -166,18 +167,19 @@ public class StatistiqueAnneeBean implements Serializable{
                       
         } catch (ParseException ex) {
             Logger.getLogger(StatistiqueAnneeBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur!", "La date est incorrecte."));
+
         }
         
         try {
             encres = encreServ.findbydate(date1,date2);
-            for (Encre encre1 : encres) {
-                System.out.println(encre1);
-            }
+            papiers=papierServ.papierby_date(date1, date2);
         } catch (DataAccessException ex) {
             Logger.getLogger(StatistiqueAnneeBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         chargerdonnee();
+        annee="";
     }
     
     public void chargerdonnee(){

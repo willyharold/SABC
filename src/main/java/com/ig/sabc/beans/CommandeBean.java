@@ -6,6 +6,7 @@
 package com.ig.sabc.beans;
 
 import com.douwe.generic.dao.DataAccessException;
+import com.ig.sabc.App;
 import com.ig.sabc.entities.Encre;
 import com.ig.sabc.entities.EncreType;
 import com.ig.sabc.entities.Imprimante;
@@ -18,6 +19,7 @@ import com.ig.sabc.service.IPapierServ;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -25,6 +27,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.mail.Address;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import org.primefaces.model.SelectableDataModel;
 
 /**
@@ -56,8 +65,7 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
     IMessageServ messageServ;
     List<Message> messages = new LinkedList<Message>();
     Message message = new Message();
-    
-    
+
     
     public IImprimanteServ getImprimanteServ() {
         return imprimanteServ;
@@ -179,6 +187,7 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
             if (cmpt_n > 0) {
                 try {
                     messageServ.messageAlerte_noir(imprimanteServ.findById(imprimante.getId()), cmpt_n);
+                    EnvoiEmail_noir(imprimanteServ.findById(imprimante.getId()), cmpt_n);
                 } catch (DataAccessException ex) {
                     Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -188,6 +197,7 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
             if (cmpt_c > 0) {
                 try {
                     messageServ.messageAlerte_couleur(imprimanteServ.findById(imprimante.getId()), cmpt_c);
+                    EnvoiEmail_couleur(imprimanteServ.findById(imprimante.getId()), cmpt_c);
                 } catch (DataAccessException ex) {
                     Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -230,6 +240,7 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
         if(cmpt >0){
             try {
                 messageServ.messageAlerte_papier(imprimanteServ.findById(imprimante.getId()), cmpt);
+                EnvoiEmail_papier(imprimanteServ.findById(imprimante.getId()), cmpt);
             } catch (DataAccessException ex) {
                 Logger.getLogger(CommandeBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -292,5 +303,148 @@ public class CommandeBean implements SelectableDataModel<Imprimante>{
         this.message = message;
     }
     
-    
+    public void EnvoiEmail_noir(Imprimante i, int conso) {
+        
+        Properties properties = new Properties();
+
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        
+        properties.put("mail.smtp.starttls.enable", "true");
+        
+        properties.put("mail.smtp.port", "587");
+        
+        //properties.put("mail.smtp.starttls.enable", "true");
+
+         Session session = Session.getInstance(properties,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("sabc.truth@gmail.com","brasserie");
+                    }
+                });
+        System.out.println("session a donnée");
+        MimeMessage message = new MimeMessage(session); 
+
+        try {
+
+            message.setText("Alerte");
+
+            message.setSubject("L'imprimante " + i.getIdentifiant() + " a une consommation élévé en boîte d'encre noir. Sa consommation abituelle est de " + i.getCategorie().getNbre_encre() + " par mois. Il a déja consommé " + conso + " ce mois-ci!");
+
+            message.setFrom(new InternetAddress("sabc.truth@gmail.com"));
+            
+            message.setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse("wtakoutsing@gmail.com"));
+
+          //System.out.println("ajout des destinataire du message");
+        } catch (MessagingException e) {
+
+            e.printStackTrace();
+        }      
+        //System.out.println("on essaye d'envoyer le message");
+        try {
+            Transport transport = session.getTransport("smtp");
+            transport.connect("sabc.truth@gmail.com", "brasserie");
+            transport.sendMessage(message, new Address[] { new InternetAddress("wtakoutsing@gmail.com"),new InternetAddress("wtakoutsing@gmail.com") }); 
+          //System.out.println("le message est parti");
+            
+        } catch (MessagingException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void EnvoiEmail_couleur(Imprimante i, int conso) {
+        Properties properties = new Properties();
+
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        
+        properties.put("mail.smtp.starttls.enable", "true");
+        
+        properties.put("mail.smtp.port", "587");
+        
+        //properties.put("mail.smtp.starttls.enable", "true");
+
+         Session session = Session.getInstance(properties,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("sabc.truth@gmail.com","brasserie");
+                    }
+                });
+        System.out.println("session a donnée");
+        MimeMessage message = new MimeMessage(session); 
+
+        try {
+
+            message.setText("Alerte");
+
+            message.setSubject("L'imprimante " + i.getIdentifiant() + " a une consommation élévé en boîte d'encre couleur. Sa consommation abituelle est de " + i.getCategorie().getNbre_encre_c()+ " par mois. Il a déja consommé " + conso + " boîtes d'encres ce mois-ci!");
+
+            message.setFrom(new InternetAddress("sabc.truth@gmail.com"));
+            
+            message.setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse("wtakoutsing@gmail.com"));
+
+          //System.out.println("ajout des destinataire du message");
+        } catch (MessagingException e) {
+
+            e.printStackTrace();
+        }
+        
+        //System.out.println("on essaye d'envoyer le message");
+        try {
+            Transport transport = session.getTransport("smtp");
+            transport.connect("sabc.truth@gmail.com", "brasserie");
+            transport.sendMessage(message, new Address[] { new InternetAddress("wtakoutsing@gmail.com"),new InternetAddress("wtakoutsing@gmail.com") }); 
+          //System.out.println("le message est parti");
+            
+        } catch (MessagingException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void EnvoiEmail_papier(Imprimante i, int conso) {
+        Properties properties = new Properties();
+
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        
+        properties.put("mail.smtp.starttls.enable", "true");
+        
+        properties.put("mail.smtp.port", "587");
+        
+        //properties.put("mail.smtp.starttls.enable", "true");
+
+         Session session = Session.getInstance(properties,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("sabc.truth@gmail.com","brasserie");
+                    }
+                });
+        System.out.println("session a donnée");
+        MimeMessage message = new MimeMessage(session); 
+
+        try {
+
+            message.setText("Alerte");
+
+            message.setSubject("L'imprimante " + i.getIdentifiant() + " a une consommation élévé en rame de papier. Sa consommation abituelle est de " + i.getCategorie().getNbre_format()+ " rames par mois. Il a déja consommé " + conso + " rames ce mois-ci!");
+
+            message.setFrom(new InternetAddress("sabc.truth@gmail.com"));
+            
+            message.setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse("wtakoutsing@gmail.com"));
+
+          //System.out.println("ajout des destinataire du message");
+        } catch (MessagingException e) {
+
+            e.printStackTrace();
+        }
+        
+        //System.out.println("on essaye d'envoyer le message");
+        try {
+            Transport transport = session.getTransport("smtp");
+            transport.connect("sabc.truth@gmail.com", "brasserie");
+            transport.sendMessage(message, new Address[] { new InternetAddress("wtakoutsing@gmail.com"),new InternetAddress("wtakoutsing@gmail.com") }); 
+          //System.out.println("le message est parti");
+            
+        } catch (MessagingException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

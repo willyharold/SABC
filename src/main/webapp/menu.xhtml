@@ -28,7 +28,7 @@ and open the template in the editor.
        <div id="menu">  
        <h:form id="menubar">          
             <p:menubar id="unique">
-                <p:menuitem value="Accueil"  icon="ui-icon-home" />
+                <p:menuitem value="Accueil" action="#{orientationBean.accueil()}" icon="ui-icon-home" />
                 <p:submenu label="Service" icon="ui-icon-folder-collapsed">       
                     <p:menuitem value="Liste services" action="#{orientationBean.liste_services()}" icon="ui-icon-plus" />
                 </p:submenu>
@@ -36,7 +36,7 @@ and open the template in the editor.
                     <p:menuitem value="Liste personnels" action="#{orientationBean.liste_personnels()}" icon="ui-icon-arrowreturnthick-1-w" />  
                 </p:submenu>
                 <p:submenu label="Messagerie" icon="ui-icon-person">
-                    <p:menuitem value="Consulter" action="#{orientationBean.messagerie()}" icon="ui-icon-plus" />
+                    <p:menuitem value="Consulter" action="#{orientationBean.messagerie()}" icon="fa fa-home" />
                     
                 </p:submenu>
                 

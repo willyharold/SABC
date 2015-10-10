@@ -1,33 +1,18 @@
 package com.ig.sabc;
 
 import com.douwe.generic.dao.DataAccessException;
-import com.ig.sabc.entities.Agence;
-import com.ig.sabc.entities.Encre;
-import com.ig.sabc.entities.EncreType;
-import com.ig.sabc.entities.Etat;
-import com.ig.sabc.entities.Message;
-import com.ig.sabc.entities.Personne;
-import com.ig.sabc.entities.Service;
-import com.ig.sabc.service.IAgenceServ;
-import com.ig.sabc.service.IEncreServ;
-import com.ig.sabc.service.IMessageServ;
-import com.ig.sabc.service.IPersonneServ;
-import com.ig.sabc.service.IServiceServ;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import javax.mail.Address;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
     public static void main( String[] args ) throws DataAccessException
@@ -43,7 +28,7 @@ public class App
 //           agence.setRegion("NORD");
 //          iAgenceDao.create(agence);
 //        tx.commit();
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring-Config.xml");
+//        ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring-Config.xml");
         
 //        On initialise le compte du super utilisateur
         
@@ -54,19 +39,19 @@ public class App
 //        compte.setRole(Role.ADMIN);
 //        compteServ.create(compte);
         
-        IMessageServ messageServ = (IMessageServ)ctx.getBean("IMessageServ");
-        Message message = new Message();
-        message.setDate_debut(Calendar.getInstance());
-        message.setMessage("bonjour root, ceci est un message a cause du premier deployement de notre application, bien vouloir le supprimer");
-        message.setStatus(Etat.NON_LU);
-        messageServ.create(message);
-        
-        IPersonneServ personneServ =(IPersonneServ)ctx.getBean("IPersonneServ");
-        List<Personne> personne = new LinkedList<Personne>();
-        personne = personneServ.findbycompt();
-        for (Personne personne1 : personne) {
-            System.out.println(personne);
-        }
+//        IMessageServ messageServ = (IMessageServ)ctx.getBean("IMessageServ");
+//        Message message = new Message();
+//        message.setDate_debut(Calendar.getInstance());
+//        message.setMessage("bonjour root, ceci est un message a cause du premier deployement de notre application, bien vouloir le supprimer");
+//        message.setStatus(Etat.NON_LU);
+//        messageServ.create(message);
+//        
+//        IPersonneServ personneServ =(IPersonneServ)ctx.getBean("IPersonneServ");
+//        List<Personne> personne = new LinkedList<Personne>();
+//        personne = personneServ.findbycompt();
+//        for (Personne personne1 : personne) {
+//            System.out.println(personne);
+//        }
 //        
 //        IAgenceServ agenceServ = ( )ctx.getBean("IAgenceServ");
 //        
@@ -146,5 +131,57 @@ public class App
 //          SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 //          
 //          System.out.println(format.format(calendar.getTime()));
+     sendMessage("Alerte", "j'espere que sa vas donner");
+    }
+
+    public static void sendMessage(String subject, String text) {
+
+        // 1 -> Création de la session 
+        Properties properties = new Properties();
+
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        
+        properties.put("mail.smtp.starttls.enable", "true");
+        
+        properties.put("mail.smtp.port", "587");
+        
+        //properties.put("mail.smtp.starttls.enable", "true");
+
+         Session session = Session.getInstance(properties,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("sabc.truth@gmail.com","brasserie");
+                    }
+                });
+        System.out.println("session a donnée");
+        MimeMessage message = new MimeMessage(session); 
+
+        try {
+
+            message.setText(text);
+
+            message.setSubject(subject);
+
+            message.setFrom(new InternetAddress("sabc.truth@gmail.com"));
+            
+            message.setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse("wtakoutsing@gmail.com"));
+
+            System.out.println("ajout des destinataire du message");
+        } catch (MessagingException e) {
+
+            e.printStackTrace();
+        }
+        
+        System.out.println("on essaye d'envoyer le message");
+        try {
+            Transport transport = session.getTransport("smtp");
+            transport.connect("sabc.truth@gmail.com", "brasserie");
+            transport.sendMessage(message, new Address[] { new InternetAddress("wtakoutsing@gmail.com"),new InternetAddress("wtakoutsing@gmail.com") }); 
+            System.out.println("le message est parti");
+            
+        } catch (MessagingException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

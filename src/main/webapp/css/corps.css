@@ -75,16 +75,17 @@ body{
 }
 
 #cville{
-    margin-left: 410px;
-    margin-right: 410px;
-    height: 350px;
+    
     background-color: white;
     border-radius: 10px;
-    /*text-align: center;*/
+    width: 1000px;
+    color: red;
+    margin-left: 120px;
+    text-align: center;
     margin-top: 30px;
-    padding-left: 40px;
     padding-top: 10px;
 }
+
 a img{
     border-radius: 10px;
     margin-left: 10px;

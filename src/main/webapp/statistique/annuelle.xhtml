@@ -21,6 +21,8 @@ and open the template in the editor.
         </div>
         <div id="conten_stat_an">
             <h:form id="list">
+                <p:growl id="messages" showDetail="true" autoUpdate="true"/>
+                
                 <p:panel id="basic" header="Statistique annuelle" style="margin-bottom:20px">
                     <h:panelGrid columns="3" cellpadding ="10">
                         <p:outputLabel value="Année"/>
@@ -29,6 +31,7 @@ and open the template in the editor.
                     </h:panelGrid>  
                 </p:panel>
             </h:form>
+            <p:separator />
             <h:form id="stat">
                 
                 <p:chart type="line" model="#{statistiqueAnneeBean.dataModel}" style ="height: 500px;" />  
